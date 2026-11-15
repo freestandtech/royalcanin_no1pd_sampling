@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Royal Canin Face-Card Sampling</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lexend+Deca:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --rc:#E2001A; --rc-d:#A8001A; --rc-l:#FFF0F1; --fs:#052762; --fs-2:#0B3A8C; --fs-l:#EAF1FD;
+  --ink:#16181d; --mute:#6b7079; --line:#ECEAE6; --cream:#FBF7F2;
+  --ok:#14804A; --ok-l:#EAF7EF; --warn:#B87800; --warn-l:#FFF7E3; --bad:#C62828; --bad-l:#FDEDED;
+  --bg:#17181c;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1000px 600px at 15% -10%,#1b4fb0 0%,#0B3A8C 35%,#052762 70%,#031a45 100%) fixed;font-family:Inter,system-ui,sans-serif;color:var(--ink);overflow-x:hidden;min-height:100vh}
+.wrap{width:1280px;transform-origin:top left;position:absolute;left:0;top:0}
+header{padding:24px 0 16px;display:flex;align-items:flex-end;justify-content:space-between}
+.eyebrow{font-size:10px;letter-spacing:3px;color:#9fb6e6;margin-bottom:8px;font-weight:600}
+.brandrow{display:flex;align-items:center;gap:14px}
+.htitle{font-size:24px;color:#fff;font-weight:500;letter-spacing:-.2px}
+.htitle span{color:#9fb6e6;font-weight:400}
+.pw{display:flex;align-items:center;gap:10px;color:#8c8c93;font-size:11px;letter-spacing:1px}
+.pw svg{height:22px;width:auto}
+.stage{background:var(--cream);border-radius:18px;height:860px;position:relative;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.cap{display:flex;gap:16px;align-items:center;margin:16px 0 12px;min-height:44px}
+.cap b{font-size:10px;letter-spacing:2px;color:#fff;background:var(--rc);padding:6px 10px;border-radius:999px;white-space:nowrap;font-weight:700}
+.cap h3{font-size:17px;font-weight:700;color:#fff}
+.cap p{font-size:13px;color:#a2a4ab;margin-top:3px}
+.steps{display:flex;gap:4px;margin-top:18px}
+.steps button{flex:1;height:8px;border:0;background:rgba(255,255,255,.14);border-radius:999px;cursor:pointer;transition:.25s}
+.steps button.done{background:rgba(255,255,255,.42)}
+.steps button.on{background:#fff;height:8px;box-shadow:0 0 12px rgba(255,255,255,.5)}
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-bottom:30px}
+.nav button{background:transparent;border:1px solid rgba(255,255,255,.3);color:#eee;font:600 13px Inter;padding:10px 20px;border-radius:999px;cursor:pointer}
+.nav button#next{background:#fff;border-color:#fff;color:#052762}
+.nav button:disabled{opacity:.3;cursor:default}
+.nav span{font:12px Inter;color:#9fb6e6}
+
+.rv{opacity:0;transform:translateY(10px);animation:rin .5s cubic-bezier(.2,.7,.2,1) forwards;animation-delay:var(--d,0s)}
+@keyframes rin{to{opacity:1;transform:none}}
+.pop{opacity:0;transform:scale(.88);animation:pop .5s cubic-bezier(.2,1.4,.4,1) forwards;animation-delay:var(--d,0s)}
+@keyframes pop{to{opacity:1;transform:none}}
+.mono{font-family:Inter,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.3px;font-weight:600}
+
+/* layout */
+.duo{display:flex;gap:36px;padding:26px 36px 26px 30px;height:100%;align-items:center;background:radial-gradient(700px 500px at 18% 50%,#fff 0%,var(--cream) 70%)}
+.devlabel{font-size:10px;letter-spacing:2.5px;color:var(--mute);text-align:center;margin-bottom:10px;font-weight:700}
+
+/* kiosk */
+.kiosk{width:372px;flex:none;position:relative}
+.kbody{background:linear-gradient(160deg,#0B3A8C,#052762 55%,#031a45);border-radius:34px;padding:30px 16px 0;box-shadow:0 30px 60px rgba(5,39,98,.28),inset 0 1px 0 rgba(255,255,255,.15);position:relative}
+.kcam{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:44px;height:10px;border-radius:6px;background:#020c22;display:flex;align-items:center;justify-content:center;gap:6px}
+.kcam i{width:6px;height:6px;border-radius:50%;background:#2c6bd8;box-shadow:0 0 6px #4c8cff}
+.kscreen{background:#fff;border-radius:20px;height:540px;overflow:hidden;position:relative;display:flex;flex-direction:column}
+.kfoot{height:92px;display:flex;align-items:center;justify-content:space-between;padding:0 10px}
+.kfoot svg{height:20px;width:auto;opacity:.9}
+.slot{width:150px;height:12px;border-radius:6px;background:#010818;box-shadow:inset 0 2px 3px #000,0 1px 0 rgba(255,255,255,.15)}
+.nfc{width:52px;height:52px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);display:grid;place-items:center;color:#9fc0ff;font-size:20px}
+.nfc.live{animation:glow 1.4s ease-in-out infinite}
+@keyframes glow{50%{box-shadow:0 0 0 6px rgba(76,140,255,.25);background:rgba(76,140,255,.25)}}
+.kbar{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;font-size:11px;color:var(--mute);border-bottom:1px solid var(--line)}
+.kbar b{color:var(--ink);font-size:12px;display:flex;align-items:center;gap:8px}
+.rcdot{width:22px;height:22px;border-radius:50%;background:var(--rc);color:#fff;font-size:8px;font-weight:800;display:grid;place-items:center;letter-spacing:.3px}
+.kpage{flex:1;padding:22px 22px;display:flex;flex-direction:column;position:relative}
+.kt{font-size:24px;font-weight:800;line-height:1.18;letter-spacing:-.3px}
+.ks{font-size:13px;color:var(--mute);margin-top:8px;line-height:1.5}
+.btn{width:100%;background:var(--rc);color:#fff;border-radius:14px;height:52px;font-weight:700;font-size:15px;display:grid;place-items:center;box-shadow:0 8px 18px rgba(226,0,26,.25)}
+.btn.ghost{background:#fff;color:var(--rc);border:1.5px solid var(--rc);box-shadow:none}
+.mt{margin-top:auto}
+.dots{display:flex;gap:5px;padding:12px 22px 0}
+.dots span{flex:1;height:4px;border-radius:3px;background:#eee}
+.dots span.on{background:var(--rc)}
+
+/* card */
+.card{width:300px;height:189px;border-radius:16px;position:relative;overflow:hidden;color:#fff;box-shadow:0 18px 40px rgba(120,0,15,.35);flex:none}
+.card.front{background:radial-gradient(140% 120% at 0% 0%,#ff2b3f 0%,#E2001A 38%,#9c0014 100%)}
+.card.front:before{content:"";position:absolute;right:-60px;top:-60px;width:230px;height:230px;border-radius:50%;border:28px solid rgba(255,255,255,.08)}
+.card.front:after{content:"";position:absolute;right:30px;bottom:-90px;width:180px;height:180px;border-radius:50%;background:rgba(255,255,255,.06)}
+.card .crest{position:absolute;left:20px;top:18px;display:flex;align-items:center;gap:9px}
+.card .crest .c{width:30px;height:30px;border-radius:50%;background:#fff;color:var(--rc);font-weight:800;font-size:9px;display:grid;place-items:center}
+.card .crest b{font-size:13px;letter-spacing:2.5px;font-weight:800}
+.card .crest small{display:block;font-size:8px;letter-spacing:1.5px;opacity:.8;font-weight:600}
+.card .chip{position:absolute;left:22px;top:72px;width:40px;height:30px;border-radius:6px;background:linear-gradient(135deg,#f4d58a,#c9a24a);box-shadow:inset 0 0 0 1px rgba(0,0,0,.15)}
+.card .chip:after{content:"";position:absolute;inset:8px 6px;border:1px solid rgba(0,0,0,.25);border-radius:3px}
+.card .wave{position:absolute;left:72px;top:76px;font-size:18px;opacity:.85}
+.card .paw{position:absolute;right:22px;top:66px;font-size:46px;opacity:.95;filter:drop-shadow(0 4px 8px rgba(0,0,0,.2))}
+.card .id{position:absolute;left:22px;bottom:40px;font-family:Inter;font-size:15px;letter-spacing:2px}
+.card .lbl{position:absolute;left:22px;bottom:18px;font-size:9px;letter-spacing:2px;opacity:.85;font-weight:700}
+.card .fs{position:absolute;right:18px;top:24px;display:flex;align-items:center;gap:5px;font-size:7px;letter-spacing:1px;opacity:.85}
+.card .fs svg{height:11px;width:auto}
+.card.back{background:#fff;color:var(--ink);border:1px solid #eee}
+.card.back .strip{position:absolute;left:0;right:0;top:20px;height:30px;background:#1d1d1f}
+.card.back .qrw{position:absolute;right:18px;bottom:18px;width:84px;padding:5px;background:#fff;border:1px solid #eee;border-radius:6px}
+.card.back .txt{position:absolute;left:18px;top:64px;right:120px;font-size:9.5px;line-height:1.55;color:#555}
+.card.back .txt b{color:var(--rc);font-size:11px;display:block;margin-bottom:3px}
+
+/* panel */
+.panel{flex:1;background:#fff;border-radius:22px;height:690px;padding:26px 30px;display:flex;flex-direction:column;gap:12px;box-shadow:0 20px 50px rgba(30,20,10,.08),0 0 0 1px var(--line);position:relative;overflow:hidden}
+.panel:before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--rc),#ff6a3d)}
+.ph{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--line);margin-bottom:2px}
+.ph .ic{width:44px;height:44px;border-radius:14px;background:var(--rc-l);display:grid;place-items:center;font-size:20px}
+.ph h2{font-size:20px;font-weight:800;letter-spacing:-.2px}
+.ph small{font-size:12px;color:var(--mute)}
+.ph .tag{margin-left:auto;font-size:10px;letter-spacing:1.5px;color:var(--ok);display:flex;gap:6px;align-items:center;font-weight:700;background:var(--ok-l);padding:5px 10px;border-radius:999px}
+.ph .tag:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);animation:blinkd 1.4s infinite}
+@keyframes blinkd{50%{opacity:.3}}
+.chk{display:flex;gap:14px;align-items:center;padding:12px 16px;border-radius:14px;background:var(--ok-l)}
+.chk .d{width:28px;height:28px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:13px;flex:none;font-weight:700}
+.chk b{font-size:14px;display:block;font-weight:700}
+.chk small{font-size:12px;color:var(--mute)}
+.chk.w{background:var(--warn-l)}.chk.w .d{background:#e0a800}
+.chk.x{background:var(--bad-l)}.chk.x .d{background:var(--bad)}
+.chk.n{background:#f7f6f3}.chk.n .d{background:var(--fs)}
+.note{background:linear-gradient(135deg,#fff7f7,#fff);border:1px solid #f6dadd;border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.55;color:#333;display:flex;gap:12px}
+.note b{color:var(--rc)}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:12px;padding:6px 12px;border-radius:999px;background:#f2f1ee;font-weight:600}
+.pill.r{background:var(--rc-l);color:var(--rc-d)}.pill.g{background:var(--ok-l);color:#0f5f37}.pill.y{background:var(--warn-l);color:#7a5600}.pill.b{background:var(--fs-l);color:var(--fs)}
+.sec{font-size:10.5px;font-weight:800;letter-spacing:1.8px;color:var(--rc);margin-top:4px}
+.kv{border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.kv div{display:flex;padding:11px 16px;border-bottom:1px solid var(--line);font-size:13px;align-items:center}
+.kv div:last-child{border-bottom:0}
+.kv span{width:150px;color:var(--mute);flex:none}
+.kv b{font-weight:700}
+
+/* scene */
+.scene{position:absolute;inset:0;background:linear-gradient(#f6efe6 0 74%,#e9dccd 74%)}
+.wall{position:absolute;top:0;left:0;right:0;height:62px;background:#2b1d1a;color:#f4e8dc;font-size:11px;letter-spacing:4px;font-weight:700;display:grid;place-items:center}
+.shelf{position:absolute;top:120px;height:430px;background:#efe3d4;border-radius:10px;padding:16px 14px;display:flex;flex-direction:column;gap:20px;box-shadow:inset 0 0 0 1px #e2d3c1}
+.shelf .row{display:flex;gap:8px;align-items:flex-end;border-bottom:7px solid #d6c3ad;padding-bottom:4px;height:62px}
+.bag{width:30px;border-radius:5px 5px 2px 2px;background:var(--rc);position:relative}
+.bag:after{content:"";position:absolute;left:5px;right:5px;top:28%;height:10px;background:#fff;border-radius:2px;opacity:.9}
+.bag.g{background:#8c8c8c}.bag.b{background:#3b6ea8}.bag.o{background:#e07a2c}.bag.k{background:#2b2b2b}
+.kioskS{position:absolute;width:190px;z-index:3}
+.kioskS .head{background:linear-gradient(160deg,#0B3A8C,#052762);border-radius:20px;padding:16px 10px 10px;box-shadow:0 20px 40px rgba(5,39,98,.3)}
+.kioskS .scr{background:#fff;border-radius:10px;height:200px;padding:14px 12px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.kioskS .scr b{font-size:13px;line-height:1.25}
+.kioskS .scr small{font-size:9.5px;color:var(--mute)}
+.kioskS .lg{display:flex;justify-content:center;padding:9px 0 3px}.kioskS .lg svg{height:13px;width:auto}
+.kioskS .neck{width:34px;height:150px;margin:0 auto;background:linear-gradient(90deg,#031a45,#0B3A8C,#031a45)}
+.kioskS .base{width:130px;height:16px;margin:0 auto;border-radius:8px;background:#031a45}
+.bubble{position:absolute;background:#fff;border-radius:16px;padding:14px 16px;font-size:14px;font-weight:600;line-height:1.45;box-shadow:0 12px 30px rgba(0,0,0,.1);z-index:6}
+.bubble:after{content:"";position:absolute;bottom:-9px;left:36px;width:18px;height:18px;background:#fff;transform:rotate(45deg)}
+.scard{position:absolute;background:#fff;border-radius:18px;box-shadow:0 18px 40px rgba(0,0,0,.1);overflow:hidden;z-index:6}
+.scard h4{background:linear-gradient(90deg,var(--rc),#c40018);color:#fff;font-size:12px;letter-spacing:1.8px;padding:13px 18px;font-weight:800}
+.scard ul{list-style:none;padding:14px 18px;display:flex;flex-direction:column;gap:10px;font-size:13px}
+.scard li{display:flex;gap:10px;align-items:center}
+.scard li i{font-style:normal;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:11px;color:#fff;background:var(--ok);flex:none;font-weight:700}
+.scard li.no{color:#a0a0a0}.scard li.no i{background:#cfcfcf}
+.walkin{animation:walk 2.2s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes walk{from{transform:translateX(360px);opacity:.2}to{transform:none;opacity:1}}
+.signage{position:absolute;background:var(--rc);color:#fff;border-radius:12px;padding:14px 18px;box-shadow:0 10px 24px rgba(226,0,26,.25)}
+
+/* face cam */
+.cam{flex:1;background:radial-gradient(circle at 50% 40%,#162a52,#050d1f);display:flex;align-items:center;justify-content:center;flex-direction:column;color:#fff;position:relative}
+.oval{width:220px;height:278px;border-radius:50%;position:relative;overflow:hidden;background:#cdd5dd}
+.ring{position:absolute;inset:-9px;border-radius:50%;border:4px solid rgba(255,255,255,.2);transition:border-color .4s}
+.ring.go{border-color:#3ddc84;box-shadow:0 0 30px rgba(61,220,132,.4)}
+.mesh{opacity:0;animation:rin .5s forwards;animation-delay:var(--d,0s)}
+
+/* dlg */
+.dim{position:absolute;inset:0;background:rgba(10,15,30,.45);display:flex;align-items:center;justify-content:center;padding:22px;backdrop-filter:blur(2px)}
+.dlg{background:#fff;border-radius:20px;padding:22px;width:100%;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.dlg h5{font-size:15px;font-weight:700;line-height:1.4;margin:10px 0 6px}
+.dlg p{font-size:12px;color:var(--mute);line-height:1.5;margin-bottom:10px}
+.dlg .opt{display:block;text-align:center;padding:12px;border-radius:12px;font-size:14px;font-weight:700;margin-top:8px;background:#f1f2f4}
+.dlg .opt.hl{background:var(--fs);color:#fff}
+
+/* qr */
+.qr{display:grid;grid-template-columns:repeat(21,1fr)}
+.qr i{aspect-ratio:1}.qr i.k{background:#111}
+
+/* map */
+.map{position:relative;border-radius:14px;overflow:hidden;background:#eef0e8}
+.pulse{transform-origin:center;transform-box:fill-box;animation:pl 2s ease-out infinite}
+@keyframes pl{from{transform:scale(.4);opacity:.8}to{transform:scale(1.7);opacity:0}}
+.bar{height:8px;background:#f0eeea;border-radius:4px;overflow:hidden}
+.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--rc),#ff5a48);width:0;animation:fill 1.2s ease forwards;animation-delay:var(--d,0s);border-radius:4px}
+@keyframes fill{to{width:var(--w)}}
+.vec{font-family:Inter;font-size:11px;color:#555;background:#f7f6f3;border-radius:12px;padding:12px 14px;line-height:1.6;word-break:break-all}
+
+/* link diagram */
+.link{display:flex;align-items:center;justify-content:space-between;gap:0;padding:6px 0}
+.node{border-radius:16px;padding:14px;text-align:center;width:170px;background:#fff;box-shadow:0 0 0 1px var(--line),0 8px 20px rgba(0,0,0,.05)}
+.node .ni{font-size:26px}
+.node b{display:block;font-size:12px;margin-top:6px;letter-spacing:.5px;color:var(--mute);font-weight:700}
+.node .v{font-family:Inter;font-size:12.5px;font-weight:600;margin-top:4px;color:var(--ink)}
+.wire{flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--rc) 0 6px,transparent 6px 11px);position:relative;opacity:0;animation:rin .3s forwards;animation-delay:var(--d,0s)}
+.wire:after{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:var(--rc);top:-3px;animation:travel 1.6s linear infinite}
+@keyframes travel{from{left:0}to{left:calc(100% - 8px)}}
+
+/* pos */
+.pos{width:372px;flex:none}
+.posb{background:linear-gradient(170deg,#2f3036,#18191d);border-radius:30px;padding:16px 14px 18px;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+.poss{background:#fff;border-radius:18px;height:600px;overflow:hidden;display:flex;flex-direction:column}
+.posh{background:#1f2937;color:#fff;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.posh b{font-size:13px}
+.line{display:flex;justify-content:space-between;font-size:13px;padding:7px 0}
+.kpi{background:#fff;border-radius:16px;padding:16px 18px;box-shadow:0 0 0 1px var(--line)}
+.kpi b{font-size:26px;font-weight:800;display:block;letter-spacing:-.5px}
+.kpi small{font-size:11px;color:var(--mute);font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{font-size:10px;letter-spacing:1px;color:var(--mute);text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);font-weight:700}
+td{padding:10px;border-bottom:1px solid #f3f1ed}
+td.m{font-family:Inter;font-size:11px}
+.final{position:absolute;inset:0;padding:26px 34px;background:var(--cream)}
+.hero{background:radial-gradient(120% 140% at 0% 0%,#ff2b3f,#E2001A 40%,#7d0012);border-radius:22px;color:#fff;padding:30px 36px;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero:after{content:"🐾";position:absolute;right:220px;top:-20px;font-size:140px;opacity:.08}
+.hero h1{font-size:30px;font-weight:800;letter-spacing:-.5px}
+.hero p{opacity:.9;margin-top:6px;font-size:15px}
+.hero button{margin-left:auto;background:#fff;color:var(--rc);border:0;border-radius:999px;padding:14px 26px;font:800 14px Inter;cursor:pointer;position:relative;z-index:1}
+.journey{display:flex;align-items:stretch;gap:0;margin-top:22px}
+.jn{flex:1;background:#fff;border-radius:18px;padding:18px;box-shadow:0 0 0 1px var(--line);display:flex;flex-direction:column;gap:8px;min-height:300px}
+.jn .n{width:52px;height:52px;border-radius:16px;background:var(--rc-l);display:grid;place-items:center}
+.jn .n{font-size:28px}
+.jn h4{font-size:14px;font-weight:800}
+.jn p{font-size:12.5px;color:var(--mute);line-height:1.5}
+.ja{width:18px;display:grid;place-items:center;color:var(--rc);font-weight:800;font-size:18px}
+
+.fsapp{position:absolute;inset:0;display:flex;background:#F4F6FB}
+.fsside{width:210px;background:linear-gradient(180deg,#052762,#031a45);color:#c9d6f2;padding:22px 16px;display:flex;flex-direction:column;gap:4px;flex:none}
+.fsside .lg{padding:0 8px 22px}.fsside .lg svg{height:24px;width:auto}
+.fsside .it{padding:10px 12px;border-radius:10px;font-size:13px;font-weight:600;display:flex;gap:10px;align-items:center}
+.fsside .it.on{background:rgba(255,255,255,.12);color:#fff}
+.fsside .cl{margin-top:auto;background:rgba(255,255,255,.07);border-radius:12px;padding:12px;font-size:11px;display:flex;gap:10px;align-items:center}
+.fsmain{flex:1;padding:22px 26px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.fstop{display:flex;align-items:center;gap:12px}
+.fstop h2{font-size:20px;font-weight:800;color:#0b1b3f}
+.fstop small{color:var(--mute);font-size:12px}
+.fstop .flt{margin-left:auto;display:flex;gap:8px}
+.fstop .flt span{background:#fff;border:1px solid #e3e8f2;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:600;color:#33415c}
+.fsc{background:#fff;border-radius:16px;box-shadow:0 0 0 1px #e6ebf3;padding:14px 16px}
+.fsc .sec{color:var(--fs)}
+.seg{display:flex;gap:6px;flex-wrap:wrap}
+.seg span{border:1.5px solid #dfe5f0;border-radius:10px;padding:8px 12px;font-size:12.5px;font-weight:600;color:#33415c;background:#fff}
+.seg span.on{border-color:var(--fs);background:var(--fs-l);color:var(--fs)}
+.code{background:#0b1430;color:#cfe0ff;border-radius:12px;padding:14px 16px;font:500 11.5px/1.65 Inter;white-space:pre;overflow:hidden}
+.code i{color:#7fb0ff;font-style:normal}.code u{color:#ffb86b;text-decoration:none}
+.plat{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#f6f8fc;font-size:12.5px;font-weight:600}
+.plat .lgo{width:28px;height:28px;border-radius:8px;display:grid;place-items:center;color:#fff;font-weight:800;font-size:12px}
+
+.spot{position:relative;width:540px;height:706px;flex:none}
+.spot .bd{position:absolute;left:0;right:0;top:40px;bottom:60px;border-radius:26px;background:linear-gradient(#f3ebe1,#efe4d6);overflow:hidden}
+.spot .bd .shelfbg{position:absolute;left:18px;top:30px;display:flex;flex-direction:column;gap:26px;opacity:.28}
+.spot .bd .shelfbg div{display:flex;gap:7px;align-items:flex-end;border-bottom:6px solid #c8b39b;padding-bottom:3px}
+.spot .fl{position:absolute;left:0;right:0;bottom:0;height:96px;border-radius:0 0 26px 26px;background:linear-gradient(#e6d6c4,#dccab5)}
+.spot .sh{position:absolute;bottom:14px;height:18px;border-radius:50%;background:rgba(60,40,20,.18);filter:blur(4px)}
+.spot .kw{position:absolute;right:0;bottom:6px;transform:scale(.82);transform-origin:bottom right}
+.spot .who{position:absolute;left:-6px;bottom:10px;z-index:4}
+.spot .pup{position:absolute;left:150px;bottom:8px;z-index:5;transform:scale(.78);transform-origin:bottom left}
+.spot .tagp{position:absolute;left:14px;top:56px;z-index:6;background:#fff;border-radius:12px;padding:8px 12px;font-size:11px;font-weight:700;box-shadow:0 6px 16px rgba(0,0,0,.08);display:flex;gap:8px;align-items:center}
+.beam{position:absolute;left:0;top:0;z-index:3;pointer-events:none;animation:beam 1.6s ease-in-out infinite}
+@keyframes beam{50%{opacity:.55}}
+.node{width:150px}
+
+h1,h2,h3,h4,.kt,.htitle,.headline,.kpi b,.hero h1{font-family:'Lexend Deca',Inter,sans-serif}
+.headline{display:flex;align-items:center;gap:16px;margin:0 0 16px;min-height:52px}
+.headline .no{font:600 13px 'Lexend Deca';color:#fff;background:var(--rc);border-radius:12px;padding:8px 12px;letter-spacing:1px}
+.headline h1{font-size:34px;font-weight:600;color:#fff;letter-spacing:-.5px;line-height:1.15}
+.headline h1{animation:rin .45s cubic-bezier(.2,.7,.2,1)}
+
+.fin{position:absolute;inset:0;background:#FBF8F4;padding:52px 64px 36px;display:flex;flex-direction:column}
+.fin-top{display:flex;gap:64px;align-items:flex-start}
+.fin-l{flex:1.15}
+.fin-eye{font:600 11px Inter;letter-spacing:2.5px;color:var(--rc)}
+.fin-h{font:600 58px/1.04 'Lexend Deca';letter-spacing:-1.6px;color:#141414;margin:14px 0 18px}
+.fin-p{font-size:16px;line-height:1.6;color:#55585f;max-width:470px}
+.fin-btn{margin-top:22px;background:transparent;border:1px solid #141414;color:#141414;border-radius:999px;padding:10px 18px;font:600 13px Inter;cursor:pointer}
+.fin-btn:hover{background:#141414;color:#fff}
+.fin-r{flex:1;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #e3ddd4}
+.fin-stat{padding:20px 16px 20px 0;border-bottom:1px solid #e3ddd4}
+.fin-stat:nth-child(odd){padding-right:24px;border-right:1px solid #e3ddd4}
+.fin-stat:nth-child(even){padding-left:24px}
+.fin-stat b{display:block;font:600 40px/1 'Lexend Deca';letter-spacing:-1px;color:#141414}
+.fin-stat span{display:block;margin-top:8px;font-size:13px;line-height:1.45;color:#6b6f76}
+.fin-stat:last-child b{color:var(--rc)}
+.fin-track{margin-top:auto;position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;padding-top:6px}
+.fin-line{position:absolute;left:5px;width:calc(80% + 11px);top:101px;height:1px;background:#d9d1c6}
+.fin-stop{position:relative}
+.fin-art{height:76px;display:flex;align-items:flex-end}
+.fin-face{border-radius:50%;overflow:hidden;width:54px;height:54px}
+.fin-dot{width:11px;height:11px;border-radius:50%;background:#141414;margin:14px 0 14px;position:relative;z-index:1;box-shadow:0 0 0 4px #FBF8F4}
+.fin-dot.end{background:var(--rc)}
+.fin-dt{font:500 11px Inter;color:#8a8d93;margin-bottom:6px}
+.fin-stop h4{font:600 16px 'Lexend Deca';color:#141414;letter-spacing:-.2px}
+.fin-stop p{font-size:12.5px;color:#6b6f76;margin-top:4px;line-height:1.45}
+.fin-coupon{background:var(--rc);color:#fff;font:700 18px 'Lexend Deca';padding:9px 12px;border-radius:6px;display:flex;align-items:baseline;gap:4px;position:relative}
+.fin-coupon small{font-size:10px;letter-spacing:1px}
+.fin-bill{width:70px;background:#fff;border:1px solid #e3ddd4;border-radius:4px;padding:8px;display:flex;flex-direction:column;gap:5px}
+.fin-bill i{height:3px;background:#e6e1da;border-radius:2px;display:block}
+.fin-bill b{font:600 12px 'Lexend Deca';color:#141414;margin-top:3px}
+.fin-foot{display:flex;align-items:center;gap:10px;justify-content:flex-end;margin-top:26px;padding-top:16px;border-top:1px solid #e3ddd4;font-size:12px;color:#8a8d93}
+.ph .ic{display:none}
+.shead{position:absolute;left:0;right:0;top:0;height:92px;padding:0 34px;display:flex;align-items:center;gap:16px;background:#fff;border-bottom:1px solid var(--line);z-index:30}
+.shead .no{font:600 13px 'Lexend Deca';color:#fff;background:#052762;border-radius:10px;padding:8px 11px;flex:none}
+.shead h1{font:600 26px/1.15 'Lexend Deca';color:#141414;letter-spacing:-.4px}
+.shead p{font-size:13.5px;color:var(--mute);margin-top:4px;line-height:1.4}
+.sbody{position:absolute;left:0;right:0;top:92px;height:768px;overflow:hidden}
+.headline,.cap{display:none!important}
+.fa{position:absolute;inset:0;display:flex;background:#f4f6fa;font-family:Inter,sans-serif}
+.fa-rail{width:58px;background:linear-gradient(180deg,#2445c4,#1b37a6);display:flex;flex-direction:column;align-items:center;padding-top:14px;gap:4px;flex:none}
+.fa-rail .lg{height:46px;display:grid;place-items:center;margin-bottom:10px}
+.fa-rail .lg svg{height:34px;width:auto}
+.fa-rail i{width:36px;height:34px;display:grid;place-items:center;opacity:.85}
+.fa-rail i svg{width:17px;height:17px;stroke:#fff;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.fa-nav{width:190px;background:#fff;border-right:1px solid #e7eaf0;flex:none;display:flex;flex-direction:column}
+.fa-back{height:54px;display:flex;align-items:center;gap:10px;padding:0 14px;font-size:13px;color:#333;border-bottom:1px solid #eef0f4}
+.fa-back b{width:22px;height:22px;border-radius:50%;background:#4b4f58;color:#fff;display:grid;place-items:center;font-size:12px}
+.fa-sec{font-size:15px;color:#1e3a8a;padding:22px 20px 10px;font-weight:500}
+.fa-it{font-size:13.5px;color:#4b5563;padding:11px 28px}
+.fa-it.on{background:#eef3ff;color:#111827;font-weight:600}
+.fa-hr{height:1px;background:#eef0f4;margin:12px 0 0}
+.fa-main{flex:1;display:flex;flex-direction:column;min-width:0}
+.fa-top{height:54px;background:#fff;border-bottom:1px solid #eef0f4;display:flex;align-items:center;padding:0 22px}
+.fa-top h3{font:600 19px Inter;color:#111827}
+.fa-top .r{margin-left:auto;display:flex;gap:18px;align-items:center;color:#9aa1ad;font-size:13px}
+.fa-top .bd{background:#2563eb;color:#fff;font-size:10px;border-radius:999px;padding:2px 6px;font-weight:700}
+.fa-body{padding:14px 18px;display:flex;flex-direction:column;gap:14px;flex:1;min-height:0}
+.fa-card{background:#fff;border:1px solid #e7eaf0;border-radius:6px}
+.fa-kpis{display:flex;padding:22px 0}
+.fa-kpi{flex:1;text-align:center;border-right:1px solid #e5e7eb}
+.fa-kpi:last-child{border-right:0}
+.fa-kpi b{display:block;font:600 28px Inter;color:#0b2a6f;letter-spacing:-.3px}
+.fa-kpi b small{font-size:14px;font-weight:500;margin-left:4px}
+.fa-kpi span{display:inline-flex;gap:6px;align-items:center;margin-top:8px;font-size:13.5px;color:#4b5563}
+.fa-kpi span i{width:15px;height:15px;border-radius:50%;background:#b9bec8;color:#fff;font-size:10px;font-style:normal;display:grid;place-items:center;font-weight:700}
+.fa-ch{padding:12px 18px;border-bottom:1px solid #eef0f4;font-size:14.5px;font-weight:600;color:#111827;display:flex;align-items:center}
+.fa-ch .tools{margin-left:auto;display:flex;gap:12px;color:#9aa1ad;font-size:12px;font-weight:500}
+.fa-tog{display:flex;justify-content:center;margin:4px 0 12px}
+.fa-tog span{border:1px solid #d6dbe4;padding:7px 14px;font-size:12.5px;color:#333}
+.fa-tog span:first-child{background:#2563eb;color:#fff;border-color:#2563eb;border-radius:4px 0 0 4px}
+.fa-tog span:last-child{border-radius:0 4px 4px 0}
+.fa table th{font-size:11px;letter-spacing:.3px;color:#6b7280;font-weight:600;background:#f9fafb}
+.fa table td{font-size:12px;color:#111827}
+.rbtn{margin-left:auto;flex:none;background:#052762;color:#fff;border:0;border-radius:999px;padding:12px 20px;font:600 14px Inter;cursor:pointer}.rbtn:hover{background:#0B3A8C}
+</style>
+</head>
+<body>
+<div class="wrap" id="wrap">
+  <header>
+    <div>
+      <div class="eyebrow">CLICK-THROUGH DEMO</div>
+      <div class="brandrow"><span id="hdlogo"></span><div style="width:1px;height:26px;background:rgba(255,255,255,.3)"></div><div class="htitle">Royal Canin <span>· In-store face-card sampling</span></div></div>
+    </div>
+    <div class="pw" style="color:#9fb6e6">No phone · No address · Face scan only</div>
+  </header>
+  <div class="headline" id="hl"></div>
+  <div class="stage" id="stage"></div>
+  <div class="cap" id="cap"></div>
+  <div class="steps" id="steps"></div>
+  <div class="nav"><button id="prev">← Previous</button><span>← → keys · Home / End to jump</span><button id="next">Next →</button></div>
+</div>
+
+<script>
+const FS_LOGO = `<svg viewBox="0 0 338 83" fill="none" xmlns="http://www.w3.org/2000/svg" > <path d="M84.5438 26.4388H68.4805V37.5159H83.9765V44.0547H68.4805V66H61.5236V19.8999H84.5438V26.4388ZM90.7542 36.9188H97.4721V39.5164C98.7062 38.2225 99.801 37.3368 100.756 36.859C101.732 36.3614 102.886 36.1126 104.22 36.1126C105.991 36.1126 107.843 36.6898 109.773 37.8443L106.698 43.995C105.424 43.0794 104.18 42.6215 102.966 42.6215C99.3034 42.6215 97.4721 45.3883 97.4721 50.9219V66H90.7542V36.9188ZM139.691 53.0418H118.85C119.029 55.4304 119.806 57.3314 121.179 58.7446C122.552 60.138 124.314 60.8346 126.464 60.8346C128.136 60.8346 129.519 60.4365 130.614 59.6403C131.689 58.8441 132.913 57.3712 134.286 55.2214L139.959 58.3863C139.084 59.8792 138.158 61.1631 137.183 62.2379C136.207 63.2929 135.162 64.1687 134.048 64.8654C132.933 65.5422 131.729 66.0398 130.435 66.3583C129.141 66.6768 127.738 66.836 126.225 66.836C121.886 66.836 118.402 65.4427 115.775 62.656C113.147 59.8493 111.834 56.1271 111.834 51.4892C111.834 46.8912 113.108 43.1689 115.655 40.3225C118.223 37.5159 121.627 36.1126 125.867 36.1126C130.146 36.1126 133.53 37.4761 136.018 40.2031C138.486 42.9102 139.721 46.6623 139.721 51.4594L139.691 53.0418ZM132.794 47.548C131.858 43.9651 129.599 42.1737 126.016 42.1737C125.2 42.1737 124.433 42.3031 123.717 42.5618C123 42.8007 122.343 43.159 121.746 43.6367C121.169 44.0945 120.671 44.6519 120.253 45.3087C119.835 45.9656 119.517 46.712 119.298 47.548H132.794ZM173.549 53.0418H152.709C152.888 55.4304 153.664 57.3314 155.037 58.7446C156.411 60.138 158.173 60.8346 160.322 60.8346C161.994 60.8346 163.378 60.4365 164.472 59.6403C165.547 58.8441 166.771 57.3712 168.145 55.2214L173.818 58.3863C172.942 59.8792 172.016 61.1631 171.041 62.2379C170.066 63.2929 169.021 64.1687 167.906 64.8654C166.791 65.5422 165.587 66.0398 164.293 66.3583C162.999 66.6768 161.596 66.836 160.083 66.836C155.744 66.836 152.261 65.4427 149.633 62.656C147.006 59.8493 145.692 56.1271 145.692 51.4892C145.692 46.8912 146.966 43.1689 149.514 40.3225C152.082 37.5159 155.485 36.1126 159.725 36.1126C164.005 36.1126 167.389 37.4761 169.877 40.2031C172.345 42.9102 173.579 46.6623 173.579 51.4594L173.549 53.0418ZM166.652 47.548C165.717 43.9651 163.457 42.1737 159.874 42.1737C159.058 42.1737 158.292 42.3031 157.575 42.5618C156.859 42.8007 156.202 43.159 155.605 43.6367C155.028 44.0945 154.53 44.6519 154.112 45.3087C153.694 45.9656 153.375 46.712 153.156 47.548H166.652ZM208.273 26.7672L202.63 30.1112C201.575 28.28 200.57 27.0857 199.615 26.5283C198.62 25.8914 197.336 25.5729 195.763 25.5729C193.832 25.5729 192.23 26.1203 190.956 27.215C189.682 28.2899 189.045 29.6435 189.045 31.2757C189.045 33.5249 190.717 35.3363 194.061 36.7097L198.659 38.5908C202.402 40.1036 205.138 41.9547 206.87 44.1443C208.602 46.3139 209.468 48.9812 209.468 52.1461C209.468 56.3859 208.055 59.8892 205.228 62.656C202.382 65.4427 198.848 66.836 194.629 66.836C190.628 66.836 187.323 65.6517 184.716 63.283C182.148 60.9143 180.546 57.5802 179.909 53.2807L186.955 51.7281C187.274 54.4352 187.831 56.3063 188.627 57.3413C190.06 59.3318 192.15 60.3271 194.897 60.3271C197.067 60.3271 198.868 59.6005 200.302 58.1475C201.735 56.6944 202.451 54.8532 202.451 52.6238C202.451 51.7281 202.322 50.912 202.063 50.1755C201.824 49.4191 201.436 48.7324 200.899 48.1153C200.381 47.4784 199.704 46.8912 198.868 46.3537C198.032 45.7964 197.037 45.2689 195.883 44.7713L191.434 42.9201C185.124 40.2528 181.969 36.3515 181.969 31.216C181.969 27.7525 183.293 24.8563 185.94 22.5274C188.587 20.1786 191.882 19.0042 195.823 19.0042C201.138 19.0042 205.288 21.5919 208.273 26.7672ZM224.576 43.1888V66H217.858V43.1888H214.991V36.9188H217.858V26.2596H224.576V36.9188H229.801V43.1888H224.576ZM256.344 36.9188H263.092V66H256.344V62.9545C253.577 65.5422 250.602 66.836 247.417 66.836C243.396 66.836 240.072 65.3829 237.444 62.4768C234.837 59.511 233.533 55.8086 233.533 51.3698C233.533 47.0106 234.837 43.3779 237.444 40.4718C240.052 37.5657 243.316 36.1126 247.238 36.1126C250.621 36.1126 253.657 37.5059 256.344 40.2927V36.9188ZM240.4 51.3698C240.4 54.1565 241.147 56.4257 242.64 58.1773C244.172 59.9489 246.103 60.8346 248.432 60.8346C250.92 60.8346 252.93 59.9787 254.463 58.2669C255.996 56.4953 256.762 54.2461 256.762 51.5191C256.762 48.7921 255.996 46.5428 254.463 44.7713C252.93 43.0395 250.94 42.1737 248.492 42.1737C246.183 42.1737 244.252 43.0495 242.699 44.8011C241.167 46.5727 240.4 48.7622 240.4 51.3698ZM271.571 36.9188H278.319V39.6059C280.668 37.277 283.315 36.1126 286.261 36.1126C289.645 36.1126 292.283 37.1775 294.174 39.3074C295.806 41.1187 296.622 44.0746 296.622 48.175V66H289.874V49.7575C289.874 46.8912 289.476 44.9106 288.68 43.8158C287.904 42.7012 286.49 42.1438 284.44 42.1438C282.211 42.1438 280.628 42.8803 279.693 44.3533C278.777 45.8063 278.319 48.3442 278.319 51.967V66H271.571V36.9188ZM326.569 15.5706H333.317V66H326.569V62.9545C323.922 65.5422 320.926 66.836 317.582 66.836C313.601 66.836 310.297 65.3829 307.669 62.4768C305.062 59.511 303.758 55.8086 303.758 51.3698C303.758 47.0305 305.062 43.4078 307.669 40.5017C310.257 37.5756 313.511 36.1126 317.433 36.1126C320.836 36.1126 323.882 37.5059 326.569 40.2927V15.5706ZM310.625 51.3698C310.625 54.1565 311.372 56.4257 312.864 58.1773C314.397 59.9489 316.328 60.8346 318.657 60.8346C321.145 60.8346 323.155 59.9787 324.688 58.2669C326.221 56.4953 326.987 54.2461 326.987 51.5191C326.987 48.7921 326.221 46.5428 324.688 44.7713C323.155 43.0395 321.165 42.1737 318.717 42.1737C316.408 42.1737 314.477 43.0495 312.924 44.8011C311.392 46.5727 310.625 48.7622 310.625 51.3698Z" fill="white" /> <path d="M5.11273 34.3195C5.11273 34.3195 5.11273 58.1626 5.11273 61.143C5.11273 64.1234 5.98956 65 8.09394 65C10.1983 65 23 65 23 65V34.3195M5.11273 34.3195C5.11273 34.3195 5.33194 34.3195 4.0167 34.3195C2.70146 34.3195 2 33.6621 2 32.654C2 31.6459 2 29.9366 2 28.7093C2 27.4821 2.7453 27 3.75365 27C4.762 27 5.11273 27 5.11273 27H12.778H23V34.3195M5.11273 34.3195H23" stroke="white" strokeWidth="3.43" strokeLinecap="round" strokeLinejoin="round" /> <path d="M45.0626 34.3788V62.9877C45.0276 64.2126 44.4927 65 43.572 65H27V34.3788M45.0626 34.3788C47.0355 34.3788 47.6931 34.2476 48 32.7165V28.6045C47.9123 28.1087 47.4213 27.0997 46.1587 27.0297C44.896 26.9597 32.8601 27.0297 27 27.0735V34.3788M45.0626 34.3788H27" stroke="white" strokeWidth="3.43" strokeLinecap="round" strokeLinejoin="round" /> <path d="M5 23C8.07142 23 18.7047 23 21.7072 23L20.6243 21.7239C17.4578 17.6405 10.7308 13.5575 11.0262 6.66641C11.1705 3.29799 15.8499 -0.581623 20.6243 4.31845C24.4439 8.23852 25.0707 15.4457 24.9066 18.5593C26.4653 14.0335 30.9018 5.74761 36.1783 8.81016C42.774 12.6383 33.4712 19.8353 31.8469 20.5499C30.5474 21.2849 28.6475 22.3194 27.8599 22.7448H46" stroke="white" strokeWidth="3.43" strokeLinecap="round" strokeLinejoin="round" /> </svg>`;
+const FACE_IMG = "data:image/jpeg;base64,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";
+const faceSVG = (mesh=false) => `<svg viewBox="0 0 230 290" width="230" height="290" preserveAspectRatio="xMidYMid slice"><image href="${FACE_IMG}" x="-23.0" y="-15.3" width="276.0" height="378.0" preserveAspectRatio="none"/>
+${mesh?`<g stroke="#4cff9a" stroke-width=".9" fill="#4cff9a" opacity=".9"><circle cx="72.8" cy="128.0" r="2.6"/><circle cx="153.3" cy="126.5" r="2.6"/><circle cx="113.5" cy="168.7" r="2.6"/><circle cx="80.5" cy="203.2" r="2.6"/><circle cx="153.3" cy="200.9" r="2.6"/><circle cx="115.0" cy="218.5" r="2.6"/><circle cx="115.0" cy="61.3" r="2.6"/><circle cx="53.7" cy="107.3" r="2.6"/><circle cx="168.7" cy="103.5" r="2.6"/><circle cx="30.7" cy="161.0" r="2.6"/><circle cx="203.2" cy="161.0" r="2.6"/><circle cx="46.0" cy="222.3" r="2.6"/><circle cx="187.8" cy="222.3" r="2.6"/><circle cx="116.5" cy="266.8" r="2.6"/><path fill="none" d="M 72.8 128.0 L 113.5 168.7 L 153.3 126.5 M 72.8 128.0 L 30.7 161.0 L 46.0 222.3 L 80.5 203.2 L 115.0 218.5 L 153.3 200.9 L 187.8 222.3 L 203.2 161.0 L 153.3 126.5 M 80.5 203.2 L 113.5 168.7 L 153.3 200.9 M 115.0 61.3 L 53.7 107.3 L 30.7 161.0 M 115.0 61.3 L 168.7 103.5 L 203.2 161.0 M 53.7 107.3 L 72.8 128.0 M 168.7 103.5 L 153.3 126.5 M 46.0 222.3 L 116.5 266.8 L 187.8 222.3 M 115.0 218.5 L 116.5 266.8"/></g>`:''}</svg>`;
+
+const faceThumb = (w=64,r=12) => `<div style="width:${w}px;height:${Math.round(w*1.26)}px;border-radius:${r}px;overflow:hidden;flex:none">${faceSVG().replace('width="230" height="290"',`width="${w}" height="${Math.round(w*1.26)}"`)}</div>`;
+document.getElementById('hdlogo').innerHTML = FS_LOGO.replace('<svg','<svg style="height:30px;width:auto;display:block"');
+
+const d = s => `data-d="${s}"`;
+function qr(seed=7){let r=seed,out='';const rnd=()=>{r=(r*9301+49297)%233280;return r/233280};
+  const f=(x,y,ox,oy)=>{const a=x-ox,b=y-oy;if(a<0||b<0||a>6||b>6)return null;return(a===0||a===6||b===0||b===6||(a>=2&&a<=4&&b>=2&&b<=4))};
+  for(let y=0;y<21;y++)for(let x=0;x<21;x++){let k=f(x,y,0,0);if(k===null)k=f(x,y,14,0);if(k===null)k=f(x,y,0,14);const inF=(x<8&&y<8)||(x>12&&y<8)||(x<8&&y>12);out+=`<i class="${(k!==null?k:(!inF&&rnd()>.52))?'k':''}"></i>`}
+  return `<div class="qr">${out}</div>`;}
+
+const CARD_ID='RC-0042-7781', FACE_ID='FID-8K2M-41Q7', KIOSK='FS-KSK-MUM-014', STN='FS-STN-MUM-022';
+let STATION=false;
+const fsSmall = () => FS_LOGO.replace('<svg','<svg style="height:11px;width:auto"');
+const cardFront = (scale=1) => `<div class="card front" style="transform:scale(${scale});transform-origin:top left"><div class="crest"><div class="c">RC</div><div><b>ROYAL CANIN</b><small>TAILORED NUTRITION</small></div></div><div class="chip"></div><div class="wave">))))</div><div class="paw">🐾</div><div class="id">${CARD_ID}</div><div class="lbl">SAMPLE &amp; REWARDS PASS</div><div class="fs">${fsSmall()}</div></div>`;
+const cardBack = () => `<div class="card back"><div class="strip"></div><div class="txt"><b>Your Royal Canin pass</b>Swipe at the FreeStand sample station for one free sample. Show at billing from your next purchase for ₹100 off. No personal details stored on this card.</div><div class="qrw">${qr(77)}</div><div style="position:absolute;left:18px;bottom:16px;font-family:Inter;font-size:10px;color:#888">${CARD_ID}</div></div>`;
+
+const kiosk = (inner,o={}) => spot(kioskDev(inner,o),{pose:o.pose||POSE,beam:o.beam||POSE==='scan',tag:o.tag||(STATION?'🎁 Same pet parent · sample station, RC aisle':'🙋 Pet parent at the face kiosk · entrance')});
+const kioskDev = (inner,{nfc=false,below='',label=(STATION?'FREESTAND SAMPLE STATION · RC AISLE':'FREESTAND FACE KIOSK · PETIQUE ENTRANCE')}={}) => `
+  <div class="kiosk"><div class="devlabel">${label}</div>
+   <div class="kbody" ${STATION?'style="background:linear-gradient(160deg,#ff2b3f,#c40018 55%,#8a0014)"':''}><div class="kcam"><i></i></div>
+    <div class="kscreen"><div class="kbar"><b><span class="rcdot">RC</span>${STATION?'Royal Canin Sample Station':'Royal Canin × FreeStand'}</b><span>4:12 PM</span></div>${inner}</div>
+    <div class="kfoot"><div class="slot"></div><div class="nfc ${nfc?'live':''}">${STATION?'💳':')))'}</div><div>${FS_LOGO.replace('<svg','<svg style="height:16px;width:auto"')}</div></div>
+   </div>${below}</div>`;
+
+let POSE='stand';
+function personSVG(pose='stand'){
+  const skin='#c98e6b', top='#f3d9cf', topD='#e6c3b6', hair='#1f130e';
+  const armL=`<path d="M46 112 Q34 160 38 212" stroke="${top}" stroke-width="17" fill="none" stroke-linecap="round"/><circle cx="38" cy="216" r="8" fill="${skin}"/>`;
+  const card=(x,y,r)=>`<g transform="translate(${x} ${y}) rotate(${r})"><rect x="-17" y="-11" width="34" height="22" rx="3" fill="#E2001A"/><rect x="-13" y="-5" width="8" height="6" rx="1" fill="#f1cf7a"/><circle cx="10" cy="5" r="3" fill="#fff" opacity=".8"/></g>`;
+  let armR;
+  if(pose==='tap'||pose==='reach') armR=`<path d="M114 112 Q146 132 164 104" stroke="${top}" stroke-width="17" fill="none" stroke-linecap="round"/><circle cx="166" cy="100" r="8" fill="${skin}"/>${pose==='tap'?card(172,92,-12)+'<circle cx="176" cy="92" r="16" fill="none" stroke="#4c8cff" stroke-width="2" opacity=".8"><animate attributeName="r" from="10" to="26" dur="1.2s" repeatCount="indefinite"/><animate attributeName="opacity" from=".9" to="0" dur="1.2s" repeatCount="indefinite"/></circle>':''}`;
+  else if(pose==='card') armR=`<path d="M114 112 Q130 160 116 178" stroke="${top}" stroke-width="17" fill="none" stroke-linecap="round"/><circle cx="112" cy="180" r="8" fill="${skin}"/>${card(106,170,-8)}`;
+  else armR=`<path d="M114 112 Q126 160 122 212" stroke="${top}" stroke-width="17" fill="none" stroke-linecap="round"/><circle cx="122" cy="216" r="8" fill="${skin}"/>`;
+  return `<svg width="${196*1.42}" height="${360*1.42}" viewBox="0 0 196 360" style="overflow:visible">
+   <path d="M64 40 Q50 70 58 120 L66 120 Q60 80 70 52Z" fill="${hair}"/>
+   <rect x="55" y="214" width="21" height="132" rx="9" fill="#2a2c3a"/><rect x="84" y="214" width="21" height="132" rx="9" fill="#2a2c3a"/>
+   <ellipse cx="64" cy="350" rx="15" ry="7" fill="#151515"/><ellipse cx="96" cy="350" rx="15" ry="7" fill="#151515"/>
+   <rect x="71" y="76" width="18" height="26" rx="6" fill="${skin}"/>
+   <path d="M40 228 Q36 114 80 100 Q124 114 120 228Z" fill="${top}"/><path d="M68 100 Q80 116 92 100" stroke="${topD}" stroke-width="3" fill="none"/>
+   ${armL}${armR}
+   <circle cx="80" cy="54" r="28" fill="${skin}"/>
+   <path d="M51 52 Q50 22 80 22 Q110 22 109 52 Q104 34 80 33 Q58 34 51 52Z" fill="${hair}"/>
+   <path d="M66 49 q4 -3 8 0 M86 49 q4 -3 8 0" stroke="${hair}" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+   <circle cx="70" cy="56" r="2.4" fill="#222"/><circle cx="90" cy="56" r="2.4" fill="#222"/>
+   <path d="M71 68 Q80 75 89 68" stroke="#8e3b3b" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  </svg>`;
+}
+function spot(device,{pose=POSE,dog=true,tag='',beam=false,bd='store'}={}){
+  const bags=[0,1,2,3].map(r=>`<div>${Array.from({length:10},(_,i)=>`<span class="bag ${['','g','b','','o','k'][(i+r)%6]}" style="display:block;width:26px;height:${34+((r*3+i*7)%5)*6}px"></span>`).join('')}</div>`).join('');
+  const beamSVG = beam?`<svg class="beam" width="540" height="706"><defs><linearGradient id="bg1" x1="1" x2="0"><stop offset="0" stop-color="#4c8cff" stop-opacity=".55"/><stop offset="1" stop-color="#4c8cff" stop-opacity=".05"/></linearGradient></defs><path d="M387 164 L108 258 L120 352 Z" fill="url(#bg1)"/><circle cx="387" cy="164" r="5" fill="#4c8cff"/></svg>`:'';
+  return `<div class="spot"><div class="bd"><div class="shelfbg">${bags}</div></div><div class="fl"></div>
+    <div class="sh" style="left:40px;width:190px"></div><div class="sh" style="right:40px;width:240px"></div>
+    <div class="kw">${device}</div>${beamSVG}
+    <div class="who">${personSVG(pose)}</div>${dog?`<div class="pup">${dogSVG}</div>`:''}
+    ${tag?`<div class="tagp rv" data-d=".3">${tag}</div>`:''}</div>`;
+}
+const panel = (icon,title,sub,body,tag='LIVE') => `<div class="panel"><div class="ph"><div class="ic">${icon}</div><div><h2>${title}</h2><small>${sub}</small></div><div class="tag">${tag}</div></div>${body}</div>`;
+const chk = (t,s,cls='',delay=0,ic) => `<div class="chk ${cls} rv" ${d(delay)}><div class="d">${ic||(cls==='x'?'✕':cls==='w'?'…':cls==='n'?'i':'✓')}</div><div><b>${t}</b><small>${s}</small></div></div>`;
+const dots = n => `<div class="dots">${[1,2,3,4].map(i=>`<span class="${i<=n?'on':''}"></span>`).join('')}</div>`;
+const kv = rows => `<div class="kv">${rows.map(([a,b])=>`<div><span>${a}</span><b>${b}</b></div>`).join('')}</div>`;
+
+function mapSVG({w=560,h=300,fence=true,pins=[],you=true}={}){
+  const roads=`<g stroke="#fff" stroke-width="14" fill="none" stroke-linecap="round"><path d="M-10 ${h*.35} L${w+10} ${h*.25}"/><path d="M${w*.3} -10 L${w*.38} ${h+10}"/><path d="M${w*.7} -10 L${w*.62} ${h+10}"/><path d="M-10 ${h*.8} Q${w*.5} ${h*.6} ${w+10} ${h*.85}"/></g><g stroke="#e2e5da" stroke-width="5" fill="none"><path d="M0 ${h*.55} L${w} ${h*.5}"/><path d="M${w*.5} 0 L${w*.48} ${h}"/><path d="M${w*.12} 0 L${w*.18} ${h}"/><path d="M${w*.88} 0 L${w*.84} ${h}"/></g><rect x="${w*.42}" y="${h*.05}" width="${w*.16}" height="${h*.16}" rx="6" fill="#d5e8c9"/><rect x="${w*.72}" y="${h*.58}" width="${w*.12}" height="${h*.14}" rx="6" fill="#d5e8c9"/><path d="M${w*.86} -10 Q${w*.95} ${h*.5} ${w+10} ${h*.4} L${w+10} -10Z" fill="#cfe3f0"/>`;
+  const cx=w*.5,cy=h*.45;
+  return `<svg viewBox="0 0 ${w} ${h}" width="100%" style="display:block">${roads}
+  ${fence?`<circle cx="${cx}" cy="${cy}" r="${Math.min(70,h*.3)}" fill="rgba(226,0,26,.08)" stroke="#E2001A" stroke-dasharray="6 5" stroke-width="2"/><rect x="${cx-12}" y="${cy-30}" width="24" height="24" rx="6" fill="#052762"/><text x="${cx}" y="${cy-14}" font-size="8" fill="#fff" text-anchor="middle" font-family="Inter" font-weight="800">FS</text><path d="M${cx-5} ${cy-7} L${cx} ${cy} L${cx+5} ${cy-7}Z" fill="#052762"/>`:''}
+  ${you?`<circle class="pulse" cx="${cx-20}" cy="${cy+16}" r="14" fill="#1a73e8"/><circle cx="${cx-20}" cy="${cy+16}" r="7" fill="#1a73e8" stroke="#fff" stroke-width="3"/>`:''}
+  ${pins.map(p=>`<g><circle cx="${p.x}" cy="${p.y}" r="${p.r}" fill="rgba(226,0,26,.16)" stroke="#E2001A" stroke-width="1.5"/><circle cx="${p.x}" cy="${p.y}" r="4" fill="#E2001A"/>${p.l?`<text x="${p.x}" y="${p.y+p.r+13}" font-size="10.5" text-anchor="middle" font-family="Inter" fill="#333" font-weight="700">${p.l}</text>`:''}</g>`).join('')}</svg>`;
+}
+
+const fsShell=(active,content)=>`<div class="fsapp"><div class="fsside"><div class="lg">${FS_LOGO}</div>${[['📊','Analytics'],['🗺️','Geo insights'],['🖥️','Kiosks'],['💳','Cards'],['🧾','Purchases']].map(([i,t])=>`<div class="it ${t===active?'on':''}">${i} ${t}</div>`).join('')}<div class="cl"><span class="rcdot" style="width:28px;height:28px">RC</span><div><b style="color:#fff">Royal Canin</b><br>Client workspace</div></div></div><div class="fsmain">${content}</div></div>`;
+const IC={users:'<circle cx="9" cy="8" r="3"/><path d="M3 18c0-3 3-5 6-5s6 2 6 5"/><path d="M15 6a3 3 0 0 1 0 6M21 18c0-2-1.5-3.6-3.5-4.4"/>',cal:'<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M9 3v4M15 3v4"/>',box:'<path d="M4 8l8-4 8 4v8l-8 4-8-4z"/><path d="M4 8l8 4 8-4M12 12v8"/>',clip:'<rect x="6" y="5" width="12" height="16" rx="2"/><path d="M9 3h6v4H9z"/>',layers:'<path d="M12 4l9 5-9 5-9-5z"/><path d="M3 14l9 5 9-5"/>',db:'<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/>',check:'<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12l3 3 5-6"/>',bars:'<path d="M6 20v-6M12 20V8M18 20V4"/>',bell:'<path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 21h4"/>',pie:'<path d="M12 3v9h9A9 9 0 1 1 12 3z"/>',star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',doc:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/>',pin:'<path d="M12 21s7-6.3 7-12a7 7 0 0 0-14 0c0 5.7 7 12 7 12z"/><circle cx="12" cy="9" r="2.5"/>'};
+const fsApp=(active,title,content)=>`<div class="fa">
+  <div class="fa-rail"><div class="lg">${FS_LOGO.replace('viewBox="0 0 338 83"','viewBox="0 6 56 74"')}</div>${['users','cal','box','clip','layers','users','db','check','bars','bell','pie','pin','star','doc'].map(k=>`<i><svg viewBox="0 0 24 24">${IC[k]}</svg></i>`).join('')}</div>
+  <div class="fa-nav"><div class="fa-back"><b>←</b>Royal Canin</div>
+    <div class="fa-sec">Analytics</div>${['Overview','Live Analytics','Geo Analytics','Purchases','Data Visualisation'].map(t=>`<div class="fa-it ${t===active?'on':''}">${t}</div>`).join('')}
+    <div class="fa-hr"></div><div class="fa-sec">Dashboards</div><div class="fa-it">All Charts</div><div class="fa-it">+ New Dashboard</div></div>
+  <div class="fa-main"><div class="fa-top"><h3>${title}</h3><div class="r"><span class="bd">99+</span><svg viewBox="0 0 24 24" width="18" height="18" fill="#9aa1ad"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-7 8-7s8 3 8 7z"/></svg></div></div>
+  <div class="fa-body">${content}</div></div></div>`;
+const faKpis=items=>`<div class="fa-card fa-kpis rv" data-d=".05">${items.map(([n,l,sm])=>`<div class="fa-kpi"><b>${n}${sm?`<small>(${sm})</small>`:''}</b><span>${l}<i>?</i></span></div>`).join('')}</div>`;
+function liveChart(){
+  const cards=[96,118,142,188,171,214,236,208,259,288,271,305,322,296,281,318,341,366,389,357,338,379,402,431,456,438];
+  const samp=cards.map((v,i)=>Math.round(v*(.95+((i*7)%5)/100)));
+  const buy=cards.map((v,i)=>i===0?0:Math.round(cards[i-1]*(.24+((i*3)%7)/100)));
+  const W=920,H=290,L=46,R=150,T=20,B=34,max=500,n=cards.length,gw=(W-L-R)/n,y=v=>T+(H-T-B)*(1-v/max);
+  let g='';
+  [0,100,200,300,400,500].forEach(v=>{g+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="#eef0f4"/><text x="${L-8}" y="${y(v)+4}" font-size="10" fill="#6b7280" text-anchor="end">${v}</text>`});
+  cards.forEach((v,i)=>{const x=L+i*gw+gw*.18;
+    g+=`<rect x="${x}" y="${y(v)}" width="${gw*.3}" height="${y(0)-y(v)}" fill="#4f6fd6"/><rect x="${x+gw*.32}" y="${y(samp[i])}" width="${gw*.3}" height="${y(0)-y(samp[i])}" fill="#8fd16b"/>`;
+    g+=`<text x="${x+gw*.15}" y="${y(v)-4}" font-size="8.5" fill="#374151" text-anchor="middle">${v}</text>`;
+    if(i%5===0){const dd=new Date(2026,9,20+i);g+=`<text x="${x+gw*.3}" y="${H-12}" font-size="10" fill="#6b7280" text-anchor="middle">${dd.getDate()} ${['Oct','Nov'][dd.getMonth()-9]}, 2026</text>`}});
+  g+=`<polyline fill="none" stroke="#f2c94c" stroke-width="2" points="${buy.map((v,i)=>`${L+i*gw+gw*.48},${y(v)}`).join(' ')}"/>`+buy.map((v,i)=>`<circle cx="${L+i*gw+gw*.48}" cy="${y(v)}" r="2.6" fill="#fff" stroke="#f2c94c" stroke-width="1.5"/>`).join('');
+  g+=[['#4f6fd6','Cards issued'],['#8fd16b','Samples'],['#f2c94c','Next-day purchases']].map(([c,t],k)=>`<rect x="${W-R+26}" y="${y(330)+k*22}" width="20" height="10" rx="2" fill="${c}"/><text x="${W-R+52}" y="${y(330)+k*22+9}" font-size="11" fill="#111827">${t}</text>`).join('');
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block;font-family:Inter">${g}</svg>`;
+}
+
+/* illustrations */
+const customerSVG=(hold=false)=>hold==='card'?customerSVG(false).replace('</svg>','<path d="M110 110 Q132 140 122 168" stroke="#f2d7c9" stroke-width="14" fill="none" stroke-linecap="round"/><g transform="rotate(-14 124 168)"><rect x="106" y="156" width="38" height="24" rx="3" fill="#E2001A"/><rect x="110" y="162" width="9" height="7" rx="1" fill="#f1cf7a"/></g></svg>'):`<svg width="150" height="330" viewBox="0 0 150 330"><circle cx="75" cy="50" r="30" fill="#c98e6b"/><path d="M45 50 Q42 14 75 16 Q108 14 105 50 Q100 30 75 28 Q50 30 45 50Z" fill="#241510"/><path d="M98 40 Q112 70 100 112 L92 60Z" fill="#241510"/><path d="M30 210 Q28 100 75 92 Q122 100 120 210Z" fill="#f2d7c9"/><rect x="45" y="205" width="24" height="115" rx="8" fill="#2c2c3a"/><rect x="81" y="205" width="24" height="115" rx="8" fill="#2c2c3a"/>${hold?`<rect x="98" y="140" width="46" height="62" rx="6" fill="#E2001A"/><rect x="104" y="158" width="34" height="14" rx="3" fill="#fff"/>`:''}</svg>`;
+const dogSVG=`<svg width="120" height="110" viewBox="0 0 120 110"><ellipse cx="62" cy="62" rx="40" ry="24" fill="#d9a35b"/><circle cx="28" cy="40" r="20" fill="#d9a35b"/><path d="M12 26 Q6 50 18 52 Z" fill="#8a5a2b"/><path d="M38 22 Q50 30 42 48 Z" fill="#8a5a2b"/><circle cx="22" cy="38" r="3" fill="#222"/><ellipse cx="10" cy="46" rx="5" ry="4" fill="#222"/><rect x="34" y="78" width="10" height="28" rx="4" fill="#c38c48"/><rect x="78" y="78" width="10" height="28" rx="4" fill="#c38c48"/><path d="M100 54 Q118 40 114 28" stroke="#d9a35b" stroke-width="8" fill="none" stroke-linecap="round"/><rect x="24" y="56" width="24" height="5" rx="2" fill="#E2001A"/></svg>`;
+const cashierSVG=`<svg width="130" height="200" viewBox="0 0 130 200"><circle cx="65" cy="45" r="30" fill="#a86b4a"/><path d="M35 40 Q65 0 95 40 Q90 22 65 18 Q40 22 35 40Z" fill="#2a1a12"/><path d="M15 200 Q15 95 65 88 Q115 95 115 200Z" fill="#2f6f5e"/><rect x="42" y="120" width="46" height="14" rx="3" fill="#fff"/><text x="65" y="131" font-size="8.5" font-family="Inter" font-weight="800" fill="#2f6f5e" text-anchor="middle">CASHIER</text></svg>`;
+
+function shelfHTML(left,cols=6){return `<div class="shelf" style="left:${left}px;width:${cols*38+20}px">${[0,1,2,3,4].map(r=>`<div class="row">${Array.from({length:cols},(_,i)=>`<div class="bag ${['','g','b','','o','k'][(i+r)%6]}" style="height:${38+((r*3+i*7)%5)*6}px"></div>`).join('')}</div>`).join('')}</div>`}
+const kioskAt = (left,screen,red=false,chip='') => `<div class="kioskS" style="left:${left}px;top:150px">${chip?`<div style="position:absolute;top:-34px;left:0;right:0;text-align:center"><span style="background:${red?'#E2001A':'#052762'};color:#fff;font-size:10px;font-weight:800;letter-spacing:1.5px;padding:6px 12px;border-radius:999px">${chip}</span></div>`:''}<div class="head" ${red?'style="background:linear-gradient(160deg,#ff2b3f,#c40018)"':''}><div class="scr">${screen}</div><div class="lg">${FS_LOGO.replace('<svg','<svg style="height:13px;width:auto"')}</div><div style="display:flex;justify-content:space-between;align-items:center;padding:4px 18px 2px"><div class="slot" style="width:80px;height:7px"></div><div class="nfc" style="width:26px;height:26px;border-radius:8px;font-size:${red?11:9}px">${red?'💳':')))'}</div></div></div><div class="neck" ${red?'style="background:linear-gradient(90deg,#8a0014,#E2001A,#8a0014)"':''}></div><div class="base" ${red?'style="background:#8a0014"':''}></div></div>`;
+function scene({customer=false,walk=false,bubble='',hold=false,card='',at='kiosk'}){
+  const cardHTML = card==='how' ? `<div class="scard rv" style="left:36px;top:150px;width:285px" ${d(.3)}><h4>FREE SAMPLE · FACE SCAN ONLY</h4><ul>
+      <li><i>1</i>Look at the camera at the face kiosk</li><li><i>2</i>Collect your Royal Canin card</li><li><i>3</i>Swipe it at the sample station</li><li><i>4</i>₹100 off your next purchase (from tomorrow)</li>
+      <li class="no"><i>✕</i>No phone number</li><li class="no"><i>✕</i>No address</li><li class="no"><i>✕</i>No forms or permissions</li></ul></div>` : '';
+  const face = kioskAt(380,`<div style="font-size:30px">🙂</div><b>Free Royal Canin card</b><small>Just look at the camera.<br>Nothing else to do.</small><div style="margin-top:auto;border:1.5px dashed #c9d3e6;color:#052762;border-radius:8px;font-size:10px;font-weight:800;padding:7px 10px;width:100%">👀 LOOK HERE</div>`,false,'① FACE KIOSK');
+  const stn = kioskAt(860,`<div class="rcdot" style="width:34px;height:34px;font-size:10px">RC</div><b>Free sample station</b><small>Swipe your Royal Canin card for a free sample</small><div style="margin-top:auto;display:flex;gap:6px">${[0,1,2].map(()=>'<div class="bag" style="width:22px;height:30px"></div>').join('')}</div>`,true,'② SAMPLE STATION');
+  const cx = at==='station' ? 650 : 590;
+  return `<div class="scene"><div class="wall">PETIQUE PET STORE · BANDRA WEST, MUMBAI · ENTRANCE → ROYAL CANIN AISLE</div>
+    ${shelfHTML(1075,5)}
+    <div style="position:absolute;left:740px;top:84px;font-size:10px;letter-spacing:2px;font-weight:800;color:#a08870">ROYAL CANIN AISLE →</div>
+    ${face}${stn}
+    ${bubble?`<div class="bubble rv" style="left:${at==='station'?600:610}px;top:110px;width:235px" ${d(.6)}>${bubble}</div>`:''}
+    ${customer?`<div class="${walk?'walkin':''}" style="position:absolute;left:${cx}px;top:300px;display:flex;align-items:flex-end;z-index:5">${at==='station'?`<div style="margin-right:-20px;margin-bottom:-6px;transform:scaleX(-1)">${dogSVG}</div>`:''}${customerSVG(hold)}${at!=='station'?`<div style="margin-left:-20px;margin-bottom:-6px">${dogSVG}</div>`:''}</div>`:''}
+    ${cardHTML}</div>`;
+}
+
+function billScene(){
+  return `<div class="scene"><div class="wall">NEXT DAY · FRIDAY 14 NOV · PETIQUE PET STORE · BILLING COUNTER</div>
+   ${shelfHTML(40,7)}
+   <div class="pop" ${d(.2)} style="position:absolute;left:370px;top:96px;z-index:7;background:#fff;border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.12);overflow:hidden;width:120px;text-align:center"><div style="background:var(--rc);color:#fff;font-size:11px;font-weight:800;letter-spacing:2px;padding:6px">NOV 2026</div><div style="font-size:44px;font-weight:800;line-height:1.1;padding-top:6px">14</div><div style="font-size:11px;color:var(--mute);font-weight:700;padding-bottom:8px">FRIDAY · NEXT DAY</div></div>
+   <div class="rv" ${d(.5)} style="position:absolute;left:500px;top:110px;z-index:7;background:#fff;border-radius:12px;padding:10px 14px;font-size:12px;box-shadow:0 8px 20px rgba(0,0,0,.08);line-height:1.6"><span style="color:var(--mute)">Thu 13 Nov</span> · sample collected 🎁<br><b>Fri 14 Nov</b> · coupon active → purchase 🛒</div>
+   <div style="position:absolute;left:380px;top:340px;width:430px;height:220px;background:#5b3e31;border-radius:14px 14px 0 0;box-shadow:inset 0 10px 0 #4a3127"></div>
+   <div style="position:absolute;left:440px;top:170px;z-index:2">${cashierSVG}</div>
+   <div style="position:absolute;left:600px;top:290px;width:110px;height:70px;background:#202128;border-radius:10px;z-index:3;box-shadow:0 8px 16px rgba(0,0,0,.2);display:grid;place-items:center;color:#7fffb0;font:600 10px Inter">₹100 OFF ✓</div>
+   <div style="position:absolute;left:400px;top:300px;z-index:3;display:flex;gap:8px"><div class="bag" style="width:66px;height:86px"></div></div>
+   <div class="bubble rv" style="left:820px;top:140px;width:260px" ${d(.8)}>I got my free sample yesterday — can I use my ₹100 off today?</div>
+   <div style="position:absolute;left:840px;top:300px;z-index:5">${customerSVG('card')}</div>
+   <div class="scard rv" style="left:1030px;top:330px;width:225px" ${d(1)}><h4>CARD SEEN AT BILLING</h4><ul><li><i>✓</i>Next day — coupon now active</li><li><i>✓</i>Valid at all RC partner stores</li><li><i>✓</i>Purchase will be linked</li></ul></div>
+  </div>`;
+}
+
+/* ---------- steps ---------- */
+const S = [
+{ t:'Two FreeStand stations in the store', s:'A face-scan kiosk near the entrance issues Royal Canin cards. A separate sample station in the Royal Canin aisle hands out samples.',
+  r:()=>scene({card:'how'}) },
+
+{ t:'A pet parent walks up with their puppy', s:'No promoter, no forms — the face kiosk is all they need to start.',
+  r:()=>scene({customer:true,walk:true,card:'how',bubble:'Free sample for my puppy? And I don\'t have to give my number? Let\'s try it! 🐶'}) },
+
+{ pose:'stand', t:'Face kiosk — just look at the camera', s:'No buttons, no permissions, no forms. Looking at the camera is the only thing the pet parent does.',
+  r:()=>`<div class="duo">${kiosk(`<div class="kpage">
+     <div class="rv" ${d(.1)} style="height:170px;border-radius:18px;background:radial-gradient(120% 120% at 0 0,#fff0f1,#ffe0e3);display:flex;align-items:center;justify-content:center;gap:10px;position:relative;overflow:hidden">${dogSVG}<div style="transform:rotate(-10deg) scale(.42);transform-origin:center;margin:-60px -90px">${cardFront()}</div></div>
+     <div class="kt rv" ${d(.25)} style="margin-top:18px">Free Royal Canin sample for your pet 🐾</div>
+     <div class="ks rv" ${d(.35)}>Look at the camera to get your Royal Canin card. Swipe it at the sample station for a free sample — plus <b style="color:var(--rc)">₹100 off</b> your next purchase.</div>
+     <div class="pills rv" ${d(.5)} style="margin-top:14px"><span class="pill g">⏱ 30 seconds</span><span class="pill r">✕ No phone</span><span class="pill r">✕ No address</span></div>
+     <div class="mt pop" ${d(.8)} style="border:2px dashed #cfd8ea;border-radius:14px;padding:14px;text-align:center;font-weight:800;color:var(--fs)">👀 Just look at the camera to begin</div></div>`)}
+  ${panel('🛎️','Kiosk session started','FreeStand kiosk '+KIOSK, `
+    ${chk('Anonymous session opened','Triggered by a face in front of the camera — no tap, no login, no OTP','',.2)}
+    <div class="sec rv" ${d(.4)}>THE JOURNEY</div>
+    <div class="rv" ${d(.5)} style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">${[['🙂','Face scan'],['💳','Get card'],['🎁','Sample station'],['🏷️','₹100 coupon'],['🛒','Next-day buy']].map(([i,t],k)=>`<div class="rv" style="--d:${.55+k*.12}s;background:#f7f6f3;border-radius:14px;padding:14px 8px;text-align:center"><div style="font-size:24px">${i}</div><div style="font-size:11.5px;font-weight:700;margin-top:6px">${t}</div></div>`).join('')}</div>
+    <div class="sec rv" ${d(1.1)}>DATA POLICY</div>
+    <div class="rv" ${d(1.2)} style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div style="background:var(--ok-l);border-radius:14px;padding:14px"><b style="color:var(--ok);font-size:13px">✓ Used</b><div class="pills" style="margin-top:8px"><span class="pill" style="background:#fff">Kiosk location</span><span class="pill" style="background:#fff">Face template</span><span class="pill" style="background:#fff">Card ID</span></div></div>
+      <div style="background:var(--bad-l);border-radius:14px;padding:14px"><b style="color:var(--bad);font-size:13px">✕ Never collected</b><div class="pills" style="margin-top:8px"><span class="pill" style="background:#fff">Phone</span><span class="pill" style="background:#fff">Address</span><span class="pill" style="background:#fff">Email</span><span class="pill" style="background:#fff">Name</span></div></div></div>`)}</div>` },
+
+{ pose:'scan', t:'Face recognition — liveness scan at the kiosk', s:'The customer looks into the kiosk camera and blinks. Anti-spoofing proves a live person, not a photo or screen.',
+  r:()=>`<div class="duo">${kiosk(`<div class="cam"><div style="font-size:15px;font-weight:700;margin-bottom:18px">Look at the camera</div>
+     <div style="position:relative"><div class="oval">${faceSVG(true).replace('<g stroke','<g class="mesh" style="--d:1s" stroke')}</div><div class="ring" id="ring"></div></div>
+     <div style="margin-top:20px;font-size:14px;font-weight:600" id="lv">Hold still…</div>
+     <div style="display:flex;gap:6px;margin-top:12px">${['Face found','Blink','Depth'].map((x,i)=>`<span class="pill rv" style="--d:${.8+i*.8}s;background:#14804A;color:#fff;font-size:11px">✓ ${x}</span>`).join('')}</div>
+     <div style="position:absolute;bottom:14px;font-size:11px;opacity:.6">🔒 No photo is saved — only an encrypted template</div></div>`)}
+  ${panel('🙂','Liveness detection','Kiosk camera · 2.4 s', `
+    ${chk('Face detected & centred','Single face in frame · good lighting','',.8)}
+    ${chk('Blink detected','Active liveness challenge passed','',1.6)}
+    ${chk('Depth & texture check','Real 3D face — rejects prints, phone screens and masks','',2.4)}
+    ${chk('Anti-spoof score 0.98','Above the 0.90 acceptance threshold','',3.0)}
+    <div class="note rv" ${d(3.4)}><span>🔐</span><div><b>The face scan is the only action.</b> No buttons, no permissions, no forms — and the photo is discarded the moment the template is made.</div></div>`)}</div>` },
+
+{ pose:'stand', t:'Face becomes an anonymous Face ID', s:'The face is converted into a template and matched 1:N across the campaign. New face → a new anonymous Face ID.',
+  r:()=>`<div class="duo">${kiosk(`${dots(2)}<div class="kpage" style="align-items:center;text-align:center">
+     <div class="pop" ${d(.2)} style="margin-top:20px;position:relative">${faceThumb(110,22)}<div style="position:absolute;right:-12px;bottom:-12px;width:40px;height:40px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:20px;border:4px solid #fff">✓</div></div>
+     <div class="kt rv" ${d(.6)} style="margin-top:24px;font-size:21px">You're new here — welcome!</div>
+     <div class="ks rv" ${d(.7)}>Your anonymous Face ID</div>
+     <div class="mono rv" ${d(.8)} style="margin-top:6px;font-size:18px;color:var(--fs);background:var(--fs-l);padding:8px 14px;border-radius:10px">${FACE_ID}</div>
+     <div class="mt rv" ${d(1.2)} style="font-weight:700;color:var(--mute)">Printing your card…</div></div>`)}
+  ${panel('🧬','Face → anonymous ID','1 : N uniqueness · campaign-wide', `
+    <div style="display:flex;gap:16px;align-items:center" class="rv" ${d(.1)}>${faceThumb(64)}<div style="font-size:22px;color:var(--mute)">→</div><div class="vec" style="flex:1">template · 512-d<br>[0.12, -0.84, 0.33, 0.07, -0.51, 0.92, -0.18, 0.44 … ]</div><div style="font-size:22px;color:var(--mute)">→</div><div class="mono" style="font-weight:700;color:var(--fs)">${FACE_ID}</div></div>
+    <div class="sec rv" ${d(.5)}>MATCHED AGAINST 4,811 FACE IDS IN THIS CAMPAIGN</div>
+    ${[['FID-2QX9-77LM','.29','29%'],['FID-6TR1-03ZD','.24','24%'],['FID-9AL4-58KC','.21','21%']].map(([a,b,w],i)=>`<div class="rv" ${d(.6+i*.15)} style="display:grid;grid-template-columns:150px 1fr 40px;gap:12px;align-items:center;font-size:12.5px"><span class="mono">${a}</span><div class="bar"><span style="--w:${w};--d:${.7+i*.15}s"></span></div><b>${b}</b></div>`).join('')}
+    ${chk('New person — no existing card','Highest similarity 0.29, below the 0.85 duplicate threshold','',1.4)}
+    <div class="note rv" ${d(1.7)}><span>🔒</span><div><b>The Face ID is a key, not an identity.</b> It holds no name, number or photo — it only lets the system recognise the same face again.</div></div>`)}</div>` },
+
+{ pose:'stand', t:'Geo mapping — the kiosk stamps its location', s:'The kiosk is geo-tagged at install, so every face scan inherits its store, area, city and state. The customer is never asked for location.',
+  r:()=>`<div class="duo">${kiosk(`${dots(1)}<div class="kpage"><div class="kt">You're at Petique ✓</div><div class="ks">Bandra West · Mumbai · Maharashtra</div>
+     <div class="map pop" style="margin-top:16px" ${d(.2)}>${mapSVG({w:300,h:230})}</div>
+     <div class="mt rv" ${d(1.2)} style="font-weight:700;color:var(--mute);text-align:center">Tagging your card to this store…</div></div>`)}
+  ${panel('📍','Geo record created','From the kiosk\'s registered location · no customer permission', `
+    <div class="map rv" ${d(.1)}>${mapSVG({w:560,h:190})}</div>
+    <div class="rv" ${d(.4)}>${kv([['Store','Petique Pet Store'],['Area','Bandra West'],['City','Mumbai'],['State','Maharashtra'],['Coordinates','<span class="mono">19.0596° N, 72.8295° E</span>'],['Kiosk','<span class="mono">'+KIOSK+'</span>']])}</div>
+    ${chk('Kiosk geo-tagged at install','Verified FreeStand device · GPS fix + store address on file','',.9)}`)}</div>` },
+
+{ pose:'reach', t:'Kiosk dispenses a Royal Canin card', s:'A branded card slides out of the kiosk. Its Card ID is bound to the Face ID and the store location.',
+  r:()=>`<div class="duo">${kiosk(`${dots(3)}<div class="kpage" style="align-items:center;text-align:center"><div style="font-size:54px;margin-top:40px" class="pop" ${d(.1)}>💳</div><div class="kt rv" ${d(.3)} style="margin-top:14px">Your card is ready</div><div class="ks rv" ${d(.4)}>Take it from the kiosk slot</div>
+     <div class="mono rv" ${d(.6)} style="margin-top:18px;font-size:14px;color:var(--mute)">Card ID</div><div class="mono rv" ${d(.7)} style="font-size:22px;color:var(--rc);font-weight:600;letter-spacing:2px">${CARD_ID}</div></div>`,
+     {below:`<div style="position:absolute;left:36px;top:395px;z-index:5;animation:dispense 1.4s cubic-bezier(.2,.8,.2,1) .5s both"><div style="transform:scale(1)">${cardFront()}</div></div><style>@keyframes dispense{from{opacity:0;transform:translateY(230px) scale(.7) rotate(0)}to{opacity:1;transform:translateY(0) scale(1) rotate(-4deg)}}</style>`})}
+  ${panel('🔗','Card linked','Face ID ↔ Card ID ↔ Location', `
+    <div class="link rv" ${d(.2)}>
+      <div class="node"><div class="ni">🧬</div><b>FACE ID</b><div class="v">${FACE_ID}</div></div>
+      <div class="wire" ${d(.6)}></div>
+      <div class="node" style="box-shadow:0 0 0 2px var(--rc),0 10px 24px rgba(226,0,26,.15)"><div class="ni">💳</div><b>CARD ID</b><div class="v" style="color:var(--rc)">${CARD_ID}</div></div>
+      <div class="wire" ${d(.9)}></div>
+      <div class="node"><div class="ni">📍</div><b>ISSUED AT</b><div class="v">Bandra W · MUM</div></div>
+    </div>
+    <div class="sec rv" ${d(1.1)}>CARD RECORD</div>
+    <div class="rv" ${d(1.2)}>${kv([['Card ID','<span class="mono">'+CARD_ID+'</span>'],['Face ID','<span class="mono">'+FACE_ID+'</span>'],['Issued at','Petique, Bandra West · Mumbai · Maharashtra'],['Issued','13 Nov 2026 · 4:13 PM'],['Sample','<span class="pill y">1 available</span>'],['Coupon','<span class="pill">Unlocks after sample</span>']])}</div>`)}</div>` },
+
+{ t:'The Royal Canin card', s:'A real, branded card the pet parent keeps — no personal details on it, just a Card ID, NFC chip and QR.',
+  r:()=>`<div style="height:100%;display:flex;align-items:center;gap:60px;padding:0 70px;background:radial-gradient(700px 500px at 30% 50%,#fff,var(--cream))">
+    <div style="position:relative;width:520px;height:520px">
+      <div class="pop" ${d(.1)} style="position:absolute;left:60px;top:250px;transform-origin:top left"><div style="transform:rotate(6deg) scale(1.3);transform-origin:top left">${cardBack()}</div></div>
+      <div class="pop" ${d(.35)} style="position:absolute;left:0;top:40px"><div style="transform:rotate(-7deg) scale(1.45);transform-origin:top left">${cardFront()}</div></div>
+    </div>
+    ${panel('💳','Royal Canin Sample & Rewards Pass','Physical card · NFC + QR', `
+      ${chk('Royal Canin branded','The brand is in the customer\'s wallet, not just a WhatsApp chat','',.6)}
+      ${chk('Works across the store','Swipe at the sample station · show at billing in any RC partner store','',.8)}
+      ${chk('No personal data on the card','Only the Card ID — useless to anyone who finds it','',1.0)}
+      ${chk('One card per face','The same face can never be issued a second card','',1.2)}
+      <div class="sec rv" ${d(1.4)}>WHAT THE CARD UNLOCKS</div>
+      <div class="rv" ${d(1.5)} style="display:grid;grid-template-columns:1fr 1fr;gap:12px"><div style="background:var(--rc-l);border-radius:14px;padding:16px"><div style="font-size:24px">🎁</div><b style="display:block;margin-top:6px">1 free sample</b><small style="color:var(--mute)">At the sample station</small></div><div style="background:var(--fs-l);border-radius:14px;padding:16px"><div style="font-size:24px">🏷️</div><b style="display:block;margin-top:6px">₹100 off next bag</b><small style="color:var(--mute)">From your next purchase · next day onwards</small></div></div>`)}</div>` },
+
+{ t:'Pet parent walks to the sample station', s:'Card in hand, the pet parent heads deeper into the store to the sample station in the Royal Canin aisle.',
+  r:()=>scene({customer:true,walk:true,at:'station',hold:'card',bubble:'Got my card! Now to the sample station 🐾'}) },
+
+{ pose:'tap', station:true, t:'Sample station: swipe card → free sample', s:'In the Royal Canin aisle, the pet parent swipes the card at the sample station. No face scan here — the card is enough — and the sample drops.',
+  r:()=>`<div class="duo">${kiosk(`${dots(4)}<div class="kpage" style="align-items:center;text-align:center">
+     <div class="kt" style="font-size:21px">Swipe your Royal Canin card</div><div class="ks">Free sample · one per card</div>
+     <div class="rv" ${d(.4)} style="margin-top:20px;display:flex;gap:12px;align-items:center;background:#f7f6f3;border-radius:14px;padding:12px 14px;width:100%;text-align:left"><div style="transform:scale(.24);transform-origin:top left;width:72px;height:45px">${cardFront()}</div><div><div class="mono" style="font-size:12px;color:var(--mute)">${CARD_ID}</div><span class="pill g rv" style="display:inline-block;margin-top:4px" ${d(1)}>✓ Card read</span></div></div>
+     <div class="pop" ${d(1.8)} style="margin-top:22px;width:100%;background:linear-gradient(135deg,#fff0f1,#fff);border:1.5px solid #f6c9ce;border-radius:18px;padding:16px;display:flex;gap:14px;align-items:center;text-align:left"><div class="bag" style="width:50px;height:66px;flex:none"></div><div><b>Royal Canin Puppy</b><div style="font-size:12px;color:var(--mute)">Trial pack · dispensing below…</div></div></div>
+     <div class="rv" ${d(2.4)} style="margin-top:auto;font-weight:800;color:var(--ok)">✓ Enjoy! Collect your sample 🐶</div></div>`,{nfc:true,
+     below:''})}
+  ${panel('🎁','Sample redemption','Card '+CARD_ID+' · sample station '+STN, `
+    ${chk('Card recognised','Swiped at the sample station · '+CARD_ID,'',.6)}
+        ${chk('Sample not yet claimed on this card','1 of 1 available · linked to '+FACE_ID,'',1.2)}
+    ${chk('Sample dispensed','Royal Canin Puppy trial pack · station stock 86 → 85','',1.9)}
+    ${chk('Card sample status → USED','This card can never claim a sample again','',2.2)}`)}</div>` },
+
+{ pose:'card', station:true, t:'₹100 coupon loaded — valid from tomorrow', s:'The sample unlocks ₹100 off on the same card, for the NEXT purchase — usable from the next day, not today.',
+  r:()=>`<div class="duo">${kiosk(`<div class="kpage" style="align-items:center;text-align:center">
+     <div class="pop" ${d(.2)} style="font-size:50px;margin-top:6px">🎉</div><div class="kt rv" ${d(.4)} style="font-size:21px;margin-top:8px">Bonus unlocked!</div>
+     <div class="pop" ${d(.7)} style="margin-top:16px;width:100%;border-radius:20px;background:radial-gradient(120% 140% at 0 0,#ff2b3f,#E2001A 45%,#8a0014);color:#fff;padding:20px;position:relative;overflow:hidden"><div style="position:absolute;right:-18px;top:-18px;font-size:90px;opacity:.12">🐾</div><div style="font-size:11px;letter-spacing:2px;font-weight:800;opacity:.85">ON YOUR CARD</div><div style="font-size:46px;font-weight:800;line-height:1.1">₹100 OFF</div><div style="font-size:12.5px;opacity:.9">your next Royal Canin bag</div><div style="border-top:1.5px dashed rgba(255,255,255,.5);margin-top:14px;padding-top:10px;display:flex;justify-content:space-between;font-size:11px"><span>Valid from 14 Nov</span><span class="mono">${CARD_ID}</span></div></div>
+     <div class="ks rv" ${d(1)} style="margin-top:16px">Use it on your next purchase — from <b>tomorrow, 14 Nov</b> — at any Royal Canin partner store.</div>
+     <div class="btn mt rv" ${d(1.2)}>Done</div></div>`)}
+  ${panel('🏷️','Coupon issued','Attached to card '+CARD_ID, `
+    <div class="rv" ${d(.2)}>${kv([['Coupon','₹100 off · min bill ₹999'],['Active from','14 Nov 2026 (next day) → 12 Jan 2027'],['Redeem at','All Royal Canin partner stores'],['Linked to','<span class="mono">'+CARD_ID+'</span> → <span class="mono">'+FACE_ID+'</span>']])}</div>
+    ${chk('Not redeemable today','Coupon activates 14 Nov 00:00 — the day after the sample','w',.4)}
+    <div class="sec rv" ${d(.5)}>RC PARTNER STORES NEAR BANDRA</div>
+    <div class="map rv" ${d(.6)}>${mapSVG({w:560,h:220,fence:false,you:true,pins:[{x:170,y:80,r:10,l:''},{x:320,y:60,r:10,l:''},{x:420,y:150,r:10,l:''},{x:120,y:170,r:10,l:''},{x:380,y:200,r:10,l:''},{x:470,y:70,r:10,l:''}]})}</div>
+    <div class="note rv" ${d(.9)}><span>💡</span><div><b>The coupon is the bridge to purchase.</b> When it's redeemed, the bill gets tied back to this card — turning an anonymous sample into measurable conversion.</div></div>`)}</div>` },
+
+{ pose:'tap', station:true, t:'Same card, second swipe — blocked', s:'A few minutes later the pet parent swipes the same card again for another sample. The card has already been used for sampling.',
+  r:()=>`<div class="duo">${kiosk(`<div class="kpage" style="align-items:center;text-align:center">
+     <div class="pop" ${d(.3)} style="width:84px;height:84px;border-radius:50%;background:var(--rc-l);color:var(--rc);display:grid;place-items:center;font-size:38px;margin-top:20px">🐾</div>
+     <div class="kt rv" ${d(.5)} style="margin-top:16px;font-size:21px">Sample already claimed on this card</div>
+     <div class="ks rv" ${d(.6)}>One free sample per card. But your ₹100 off is still waiting for you!</div>
+     <div class="rv" ${d(.9)} style="margin-top:18px;border:2px dashed var(--rc);border-radius:16px;padding:14px;width:100%"><div style="font-size:12px;color:var(--mute)">On card ${CARD_ID}</div><div style="font-size:26px;color:var(--rc);font-weight:800">₹100 OFF</div></div>
+     <div class="btn ghost mt rv" ${d(1.1)}>Find a partner store →</div></div>`,{nfc:true})}
+  ${panel('🚫','Duplicate blocked','Sample station '+STN+' · 4:31 PM', `
+    ${chk('Card recognised',CARD_ID,'',.3)}
+    ${chk('Sample already redeemed on this card','Claimed 4:14 PM today · Puppy trial pack','x',.6)}
+    <div class="sec rv" ${d(.9)}>AND IF THEY TRY A NEW CARD?</div>
+    <div class="rv" ${d(1)} style="display:flex;gap:14px;align-items:center;background:#f7f6f3;border-radius:14px;padding:14px">${faceThumb(52)}<div style="font-size:20px;color:var(--mute)">≈</div>${faceThumb(52)}<div style="font-size:13px;line-height:1.5;margin-left:6px"><b>Face similarity 0.97</b><br><span style="color:var(--mute)">Matches ${FACE_ID} — already holds ${CARD_ID}</span></div></div>
+    ${chk('No second card for the same face','The kiosk re-issues nothing — it points them back to their existing card','x',1.3)}
+    <div class="note rv" ${d(1.6)}><span>💰</span><div><b>Two locks, zero PII:</b> the card stops repeat sampling, and the face stops someone collecting multiple cards.</div></div>`)}</div>` },
+
+{ t:'Next day — back at the billing counter', s:'Friday 14 Nov, the day after the sample: the pet parent buys a full bag and shows the Royal Canin card at the counter.',
+  r:()=>billScene() },
+
+{ pose:'tap', t:'Card scanned at billing — ₹100 off, bill captured', s:'Next-day purchase: the cashier scans the card, the coupon applies, and the bill ID and amount are linked to the card.',
+  r:()=>`<div class="duo">${spot(`<div class="pos" style="margin-right:6px"><div class="devlabel">BILLING COUNTER · PETIQUE, BANDRA WEST</div><div class="posb"><div class="poss">
+     <div class="posh"><b>Petique POS</b><span>Fri 14 Nov · 11:42 AM</span></div>
+     <div style="padding:16px 18px;flex:1;display:flex;flex-direction:column">
+       <div class="rv" ${d(.2)} style="display:flex;align-items:center;gap:12px;background:var(--rc-l);border-radius:14px;padding:10px 12px"><div style="transform:scale(.26);transform-origin:top left;width:78px;height:49px">${cardFront()}</div><div><div style="font-size:11px;color:var(--mute)">Royal Canin card scanned</div><b class="mono" style="font-size:13px">${CARD_ID}</b></div><span class="pill g" style="margin-left:auto">✓ Active since 14 Nov</span></div>
+       <div style="margin-top:14px;font-size:11px;letter-spacing:1px;color:var(--mute);font-weight:700">BILL <span class="mono" style="color:var(--ink)">INV-PQ-261114-0831</span></div>
+       <div style="margin-top:6px;border-top:1px solid var(--line)">
+         <div class="line"><span>Royal Canin Medium Puppy 4 kg</span><b>₹2,449</b></div>
+         <div class="line"><span>Dog chew toy</span><b>₹299</b></div>
+         <div class="line" style="color:var(--mute)"><span>Subtotal</span><span>₹2,748</span></div>
+         <div class="line rv" ${d(.8)} style="color:var(--rc);font-weight:700"><span>Royal Canin card · ₹100 off</span><span>− ₹100</span></div></div>
+       <div class="rv" ${d(1.1)} style="border-top:2px solid var(--ink);margin-top:6px;padding-top:10px;display:flex;justify-content:space-between;font-size:20px;font-weight:800"><span>Total</span><span>₹2,648</span></div>
+       <div class="btn mt rv" ${d(1.4)} style="background:#1f2937;box-shadow:none">Pay ₹2,648 · UPI</div>
+       <div class="pop" ${d(2)} style="text-align:center;color:var(--ok);font-weight:800;font-size:13px;margin-top:10px">✓ Paid · coupon redeemed · bill synced</div>
+     </div></div></div></div>`,{tag:'📅 Same pet parent · NEXT DAY, 14 Nov'})}
+  ${panel('🧾','Purchase captured','Sample → purchase · attributed', `
+    <div class="link rv" ${d(.2)}>
+      <div class="node" style="width:150px"><div class="ni">🎁</div><b>SAMPLED</b><div class="v">13 Nov · Bandra W</div></div>
+      <div class="wire" ${d(.5)}></div>
+      <div class="node" style="width:150px;box-shadow:0 0 0 2px var(--rc)"><div class="ni">💳</div><b>SAME CARD</b><div class="v" style="color:var(--rc)">${CARD_ID}</div></div>
+      <div class="wire" ${d(.8)}></div>
+      <div class="node" style="width:150px"><div class="ni">🛒</div><b>PURCHASED</b><div class="v">14 Nov · counter</div></div></div>
+    <div class="rv" ${d(1.2)}>${kv([['Face ID','<span class="mono">'+FACE_ID+'</span>'],['Bill ID','<span class="mono">INV-PQ-261114-0831</span>'],['Bill amount','₹2,748 <span style="color:var(--mute);font-weight:500">· RC items ₹2,449</span>'],['Purchase store','Petique Pet Store · Bandra West'],['City · State','Mumbai · Maharashtra'],['Time to purchase','1 day — the next day']])}</div>
+    ${chk('Coupon used on the next purchase','Sampled 13 Nov → redeemed 14 Nov · same-day use is blocked','',1.6)}
+    ${chk('Purchase intent confirmed for '+FACE_ID,'Sampled Puppy → bought Medium Puppy 4 kg (size-up)','',2.0)}`)}</div>` },
+
+{ t:'FreeStand dashboard — analytics for Royal Canin', s:'Royal Canin logs into FreeStand and sees face scans, cards, samples, coupons and next-day purchases — live.',
+  r:()=>fsApp('Live Analytics','Live Analytics',`
+    ${faKpis([['5,025','Face Scans'],['4,812','Cards Issued'],['4,812','Samples'],['213','Duplicates Blocked'],['29%','Purchase Intent','1,386'],['₹31.2L','Bill Value']])}
+    <div class="fa-card rv" data-d=".2"><div class="fa-ch">Live analytics<div class="tools">Day wise · Last 26 days</div></div><div style="padding:6px 14px 0">${liveChart()}</div><div class="fa-tog"><span>Day wise claims</span><span>Cumulative claims</span></div></div>
+    <div class="fa-card rv" data-d=".35" style="flex:1;overflow:hidden"><div class="fa-ch">Card-level purchases<div class="tools">Bill ID &amp; amount per card</div></div>
+      <table><tr><th>CARD ID</th><th>FACE ID</th><th>SAMPLED AT</th><th>PURCHASED</th><th>CITY · STATE</th><th>BILL ID</th><th style="text-align:right">BILL</th></tr>
+      ${[[CARD_ID,FACE_ID,'Petique, Bandra W','14 Nov','Mumbai · MH','INV-PQ-261114-0831','₹2,748'],['RC-0042-7790','FID-3MZ8-02KD','Petique, Bandra W','14 Nov','Mumbai · MH','INV-PQ-261114-0412','₹1,899'],['RC-0019-1182','FID-7QA1-66TR','Koramangala','13 Nov','Bengaluru · KA','INV-KR-261113-2290','₹3,420']].map((r,i)=>`<tr ${i===0?'style="background:#f2f6ff"':''}>${r.map((c,k)=>`<td class="${[0,1,5].includes(k)?'m':''}" ${k===6?'style="text-align:right;font-weight:600"':''}>${c}</td>`).join('')}</tr>`).join('')}</table></div>`) },
+
+{ t:'Geo insights — where sampling turns into purchase', s:'Drill into any state, city or store: cards, samples, next-day purchases and bill value — all keyed to anonymous card IDs.',
+  r:()=>fsApp('Geo Analytics','Geo Analytics · Mumbai, Maharashtra',`
+    ${faKpis([['1,684','Face Scans'],['1,612','Cards Issued'],['1,612','Samples'],['34%','Purchase Intent','548'],['₹2,310','Avg Bill'],['9','Kiosks']])}
+    <div style="display:grid;grid-template-columns:1.25fr 1fr;gap:14px;flex:1;min-height:0">
+      <div class="fa-card rv" data-d=".2" style="display:flex;flex-direction:column"><div class="fa-ch">Cards by store<div class="tools">Bubble = cards issued</div></div><div style="padding:12px;flex:1"><div class="map">${mapSVG({w:560,h:400,fence:false,you:false,pins:[{x:150,y:120,r:34,l:'Bandra W · 412'},{x:270,y:70,r:24,l:'Khar W · 268'},{x:400,y:190,r:28,l:'Powai · 301'},{x:110,y:270,r:20,l:'Worli · 196'},{x:480,y:90,r:18,l:'Andheri E · 158'},{x:240,y:330,r:22,l:'Lower Parel · 221'},{x:470,y:300,r:14,l:'Chembur · 56'}]}).replace(/#E2001A/g,'#2445c4').replace(/rgba\(226,0,26,\.16\)/g,'rgba(36,69,196,.16)')}</div></div></div>
+      <div style="display:flex;flex-direction:column;gap:14px;min-height:0">
+        <div class="fa-card rv" data-d=".3"><div class="fa-ch">Purchase intent by state</div>
+          <table><tr><th>STATE</th><th>CARDS</th><th>PURCHASES</th><th style="width:40%">INTENT</th></tr>
+          ${[['Maharashtra','2,140','728','34%'],['Karnataka','1,288','399','31%'],['Delhi NCR','902','235','26%'],['Telangana','482','106','22%']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td><div style="display:flex;gap:8px;align-items:center"><div class="bar" style="flex:1;background:#eef2fb"><span style="--w:${parseInt(r[3])*2.6}%;background:#4f6fd6"></span></div><b style="font-size:12px">${r[3]}</b></div></td></tr>`).join('')}</table></div>
+        <div class="fa-card rv" data-d=".4" style="flex:1"><div class="fa-ch">Top stores · Mumbai</div>
+          <table><tr><th>STORE</th><th>CARDS</th><th>NEXT-DAY BUYS</th><th style="text-align:right">BILL VALUE</th></tr>
+          ${[['Petique, Bandra W','412','157','₹3.6L'],['Powai','301','87','₹2.0L'],['Khar W','268','83','₹1.9L'],['Lower Parel','221','73','₹1.7L']].map(r=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td><span class="pill g" style="padding:2px 8px">${r[2]}</span></td><td style="text-align:right;font-weight:600">${r[3]}</td></tr>`).join('')}</table></div>
+      </div></div>`) },
+
+{ t:'Summary — one face, one card, measurable purchase', s:'Face scan only: geo-tagged, face-unique sampling that follows the customer to the next-day bill — no phone, no address, no consent forms.',
+  r:()=>`<div class="fin">
+    <div class="fin-top">
+      <div class="fin-l rv" ${d(.05)}>
+        <div class="fin-eye">THE RESULT</div>
+        <h1 class="fin-h">A face scan in.<br>A sale out.</h1>
+        <p class="fin-p">Royal Canin gives one sample to each real pet parent, then sees the purchase it led to — without ever asking for a phone number, an address or a name.</p>
+        <button class="fin-btn" onclick="go(0)">Replay the demo</button>
+      </div>
+      <div class="fin-r">
+        ${[['4,812','pet parents sampled — each one a unique face'],['28.8%','came back and bought with their card'],['₹31.2 L','in bills traced back to a sample'],['0','phone numbers, addresses or names collected']].map(([n,t],k)=>`<div class="fin-stat rv" ${d(.15+k*.1)}><b>${n}</b><span>${t}</span></div>`).join('')}
+      </div>
+    </div>
+    <div class="fin-track rv" ${d(.5)}>
+      <div class="fin-line"></div>
+      ${[
+        [`<div class="fin-face">${faceThumb(54,27)}</div>`,'Face scan','Anonymous Face ID, store tagged','Thu 13 Nov · 4:12 PM'],
+        [`<div style="width:96px;height:60px;overflow:hidden;border-radius:6px"><div style="transform:scale(.32);transform-origin:top left">${cardFront()}</div></div>`,'Royal Canin card','One card per face','4:13 PM'],
+        [`<div class="bag" style="width:40px;height:56px"></div>`,'Free sample','Swiped at the sample station','4:16 PM'],
+        [`<div class="fin-coupon">₹100<small>OFF</small></div>`,'Coupon loaded','Usable from the next day','4:16 PM'],
+        [`<div class="fin-bill"><i></i><i></i><i style="width:60%"></i><b>₹2,748</b></div>`,'Next-day purchase','Bill ID + amount sent to the brand','Fri 14 Nov · 11:42 AM']
+      ].map(([art,t,c,dt],k)=>`<div class="fin-stop"><div class="fin-art">${art}</div><div class="fin-dot ${k===4?'end':''}"></div><div class="fin-dt">${dt}</div><h4>${t}</h4><p>${c}</p></div>`).join('')}
+    </div>
+    <div class="fin-foot rv" ${d(.7)}><span>Kiosks, cards and purchase attribution by</span>${FS_LOGO.replace(/white/g,'#052762').replace('<svg','<svg style="height:20px;width:auto"')}</div>
+  </div>` },
+];
+
+/* ---------- engine ---------- */
+const HEADS=["Two FreeStand stations in the store", "Pet parent walks up to the face kiosk", "The pet parent just looks at the camera", "The scan checks for a real person", "The face becomes an anonymous ID", "The kiosk tags the store location", "Pet parent gets a Royal Canin card", "The Royal Canin card", "Pet parent walks to the sample station", "Swipe the card, get a free sample", "₹100 off unlocks — valid from tomorrow", "Same card can't claim twice", "Next day, the pet parent comes back to buy", "Coupon applied, bill captured", "Royal Canin sees it live on FreeStand", "Which stores and cities turn samples into sales", "One face. One card. One sample. One sale."];
+let cur=0, timers=[];
+const stage=document.getElementById('stage'), cap=document.getElementById('cap'), stepsEl=document.getElementById('steps');
+stepsEl.innerHTML=S.map((s,i)=>`<button title="${i+1}. ${s.t.replace(/"/g,'')}" onclick="go(${i})"></button>`).join('');
+function go(i){
+  cur=Math.max(0,Math.min(S.length-1,i)); timers.forEach(clearTimeout); timers=[];
+  const st=S[cur]; POSE=st.pose||'stand'; STATION=!!st.station; stage.innerHTML=`<div class="shead"><span class="no">${String(cur+1).padStart(2,'0')}</span><div><h1>${HEADS[cur]||st.t}</h1><p>${st.s}</p></div>${cur===S.length-1?'<button class="rbtn" onclick="go(0)">↺ Restart demo</button>':''}</div><div class="sbody">${st.r()}</div>`;
+  stage.querySelectorAll('[data-d]').forEach(el=>el.style.setProperty('--d',el.dataset.d+'s'));
+  cap.innerHTML=`<b>STEP ${cur+1} / ${S.length}</b><div><p style="font-size:14px;color:#c4c6cc">${st.s}</p></div>`;
+  [...stepsEl.children].forEach((b,k)=>b.className=k===cur?'on':k<cur?'done':'');
+  document.getElementById('prev').disabled=cur===0; document.getElementById('next').disabled=cur===S.length-1;
+  const ring=stage.querySelector('#ring'), lv=stage.querySelector('#lv');
+  if(ring){timers.push(setTimeout(()=>{lv.textContent='Blink once…'},900));timers.push(setTimeout(()=>{lv.textContent='Turn your head slightly…'},1700));timers.push(setTimeout(()=>{ring.classList.add('go');lv.textContent='✓ Live person verified'},2600));}
+  try{history.replaceState(null,'','#'+(cur+1))}catch(e){}
+}
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('next').onclick=()=>go(cur+1);
+addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);if(e.key==='Home')go(0);if(e.key==='End')go(S.length-1);});
+function fit(){const w=document.getElementById('wrap');const s=Math.min(1,(innerWidth-32)/1280);w.style.transform=`scale(${s})`;w.style.left=((innerWidth-1280*s)/2)+'px';}
+addEventListener('resize',fit);fit();
+go((parseInt(location.hash.slice(1))||1)-1);
+</script>
+</body>
+</html>
