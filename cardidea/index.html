@@ -702,10 +702,8 @@ const S = [
         <p class="fin-p">Royal Canin gives one sample to each real pet parent, then sees the purchase it led to — without ever asking for a phone number, an address or a name.</p>
         <button class="fin-btn" onclick="go(0)">Replay the demo</button>
       </div>
-      <div class="fin-r">
-        ${[['4,812','pet parents sampled — each one a unique face'],['28.8%','came back and bought with their card'],['₹31.2 L','in bills traced back to a sample'],['0','phone numbers, addresses or names collected']].map(([n,t],k)=>`<div class="fin-stat rv" ${d(.15+k*.1)}><b>${n}</b><span>${t}</span></div>`).join('')}
-      </div>
-    </div>
+      <div class="pop" data-d=".3" style="flex:1;position:relative;height:330px"><div style="position:absolute;left:90px;top:120px;transform:rotate(7deg) scale(1.15);transform-origin:top left">${cardBack()}</div><div style="position:absolute;left:30px;top:10px;transform:rotate(-6deg) scale(1.3);transform-origin:top left">${cardFront()}</div></div>
+        </div>
     <div class="fin-track rv" ${d(.5)}>
       <div class="fin-line"></div>
       ${[
