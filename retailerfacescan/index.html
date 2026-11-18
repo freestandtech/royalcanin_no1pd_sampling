@@ -398,6 +398,17 @@ h1,h2,h3,h4,.kt,.htitle,.headline,.kpi b,.hero h1{font-family:'Lexend Deca',Inte
 .plink{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5;background:#fff;border-radius:999px;padding:7px 12px;font:600 11.5px Inter;color:#052762;box-shadow:0 6px 16px rgba(0,0,0,.12);white-space:nowrap}
 
 .bubble.br:after{left:auto;right:44px}
+
+/* Upright phones (fit() sets html.phone): the slide is laid out 600px wide with its parts stacked,
+   so a phone shows it at about 60% instead of the whole 1280px slide at under 30%. */
+html.phone header{flex-wrap:wrap;gap:10px 16px;align-items:flex-start;padding:18px 4px 14px}
+html.phone .stage{height:auto}
+html.phone .shead{position:relative;height:auto;min-height:92px;padding:16px 22px}
+html.phone .sbody{position:relative;top:auto;height:auto;overflow:visible}
+html.phone .sbody>.duo,html.phone .sbody>div:not([class]){flex-direction:column!important;height:auto!important;padding:20px!important;gap:20px!important;align-items:center!important}
+html.phone .pair{width:100%;height:716px}
+html.phone .panel{flex:none;width:100%;height:auto;min-height:0}
+html.phone .sbody>.scene,html.phone .sbody>.fa,html.phone .sbody>.fin{position:relative;inset:auto;width:1280px;height:768px;zoom:.46875}
 </style>
 </head>
 <body>
@@ -853,8 +864,14 @@ function go(i){
 document.getElementById('prev').onclick=()=>go(cur-1);
 document.getElementById('next').onclick=()=>go(cur+1);
 addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);if(e.key==='Home')go(0);if(e.key==='End')go(S.length-1);});
-function fit(){const w=document.getElementById('wrap');const h=w.scrollHeight||1090;const s=Math.min((innerWidth-32)/1280,(innerHeight-8)/h);w.style.transform=`scale(${s})`;w.style.left=((innerWidth-1280*s)/2)+'px';document.body.style.height=(h*s)+'px';document.body.style.minHeight='0';document.body.style.overflow='hidden';}
+// A phone browser stretches innerWidth/innerHeight to the unscaled 1280px slide (the demo then showed
+// at near desktop size, cut off on the right), so measure the screen there instead. An upright phone
+// gets the stacked 600px layout (html.phone) and a short screen (a phone on its side) fits the width
+// and scrolls; anything larger fits the whole slide, as before.
+function fit(){const de=document.documentElement,vw=innerWidth-de.clientWidth>100?de.clientWidth:innerWidth,vh=innerHeight-de.clientHeight>100?de.clientHeight:innerHeight;const phone=vw<760&&vh>vw,roll=phone||vh<520;de.classList.toggle('phone',phone);const W=phone?600:1280,w=document.getElementById('wrap');w.style.width=W+'px';const h=w.scrollHeight||1090;const s=roll?Math.min(1,(vw-(phone?16:32))/W):Math.min((vw-32)/1280,(vh-8)/h);w.style.transform=`scale(${s})`;w.style.left=((vw-W*s)/2)+'px';document.body.style.height=(h*s)+'px';document.body.style.minHeight='0';document.body.style.overflow=roll?'':'hidden';}
 addEventListener('resize',fit);fit();
+// stacked steps differ in height: on a phone, keep the page as tall as the step on screen
+if(window.ResizeObserver)new ResizeObserver(()=>{if(document.body.style.overflow!=='hidden')fit();}).observe(document.getElementById('wrap'));
 go((parseInt(location.hash.slice(1))||1)-1);
 </script>
 </body>

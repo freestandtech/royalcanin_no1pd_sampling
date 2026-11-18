@@ -334,6 +334,16 @@ h1,h2,h3,h4,.kt,.htitle,.headline,.kpi b,.hero h1{font-family:'Lexend Deca',Inte
 .fa table th{font-size:11px;letter-spacing:.3px;color:#6b7280;font-weight:600;background:#f9fafb}
 .fa table td{font-size:12px;color:#111827}
 .rbtn{margin-left:auto;flex:none;background:#052762;color:#fff;border:0;border-radius:999px;padding:12px 20px;font:600 14px Inter;cursor:pointer}.rbtn:hover{background:#0B3A8C}
+
+/* Upright phones (fit() sets html.phone): the slide is laid out 600px wide with its parts stacked,
+   so a phone shows it at about 60% instead of the whole 1280px slide at under 30%. */
+html.phone header{flex-wrap:wrap;gap:10px 16px;align-items:flex-start;padding:18px 4px 14px}
+html.phone .stage{height:auto}
+html.phone .shead{position:relative;height:auto;min-height:92px;padding:16px 22px}
+html.phone .sbody{position:relative;top:auto;height:auto;overflow:visible}
+html.phone .sbody>.duo,html.phone .sbody>div:not([class]){flex-direction:column!important;height:auto!important;padding:20px!important;gap:20px!important;align-items:center!important}
+html.phone .panel{flex:none;width:100%;height:auto;min-height:0}
+html.phone .sbody>.scene,html.phone .sbody>.fa,html.phone .sbody>.fin{position:relative;inset:auto;width:1280px;height:768px;zoom:.46875}
 </style>
 </head>
 <body>
@@ -737,7 +747,10 @@ function go(i){
 document.getElementById('prev').onclick=()=>go(cur-1);
 document.getElementById('next').onclick=()=>go(cur+1);
 addEventListener('keydown',e=>{if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1);if(e.key==='Home')go(0);if(e.key==='End')go(S.length-1);});
-function fit(){const w=document.getElementById('wrap');const s=Math.min(1,(innerWidth-32)/1280);w.style.transform=`scale(${s})`;w.style.left=((innerWidth-1280*s)/2)+'px';}
+// A phone browser stretches innerWidth to the unscaled 1280px slide (the demo then showed at near
+// desktop size, cut off on the right), so measure the screen there instead. An upright phone gets
+// the stacked 600px layout (html.phone); anything else scales the 1280px slide to the width, as before.
+function fit(){const de=document.documentElement,vw=innerWidth-de.clientWidth>100?de.clientWidth:innerWidth,vh=innerHeight-de.clientHeight>100?de.clientHeight:innerHeight;const phone=vw<760&&vh>vw;de.classList.toggle('phone',phone);const W=phone?600:1280,w=document.getElementById('wrap');w.style.width=W+'px';const s=Math.min(1,(vw-(phone?16:32))/W);w.style.transform=`scale(${s})`;w.style.left=((vw-W*s)/2)+'px';}
 addEventListener('resize',fit);fit();
 go((parseInt(location.hash.slice(1))||1)-1);
 </script>
